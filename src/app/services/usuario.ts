@@ -13,7 +13,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:3001/api/usuarios';
+  private apiUrl = 'https://api-cuestionarios-production.up.railway.app/api/usuarios';
 
   // Signal que mantiene el usuario actual
   usuarioActual = signal<Usuario | null>(null);
