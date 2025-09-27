@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 export interface Usuario {
   id: number;
   nombres: string;
@@ -13,7 +14,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'https://api-cuestionarios-production.up.railway.app/api/usuarios';
+  private apiUrl = environment.apiUrl+'/usuarios';
 
   // Signal que mantiene el usuario actual
   usuarioActual = signal<Usuario | null>(null);
