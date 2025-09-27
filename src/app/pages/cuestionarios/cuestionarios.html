@@ -1,0 +1,75 @@
+<div class="cuestionarios-container">
+  <h2>Lista de Cuestionarios</h2>
+<button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#cuestionarioModal"
+    >
+      ➕ Nuevo Cuestionario
+    </button>
+  <table class="cuestionarios-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Descripción</th>
+        <th>Tema</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of cuestionarios">
+        <td>{{ c.id_cuestionario }}</td>
+        <td>{{ c.titulo_cuestionario }}</td>
+        <td>{{ c.descripcion_cuestionario }}</td>
+        <td>{{ c.nom_tema }}</td>
+        <td>
+          <span class="badge" [class.activo]="c.estado_cuestionario" [class.inactivo]="!c.estado_cuestionario">
+            {{ c.estado_cuestionario ? 'activo' : 'inactivo' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn editar">Editar</button>
+          <button class="btn eliminar">Eliminar</button>
+          <button [routerLink]="['/admin/preguntas', c.id_cuestionario]" class="btn success">Preguntas</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+ <!-- 📌 Modal de Bootstrap -->
+  <div
+    class="modal fade"
+    id="cuestionarioModal"
+    tabindex="-1"
+    aria-labelledby="cuestionarioModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="cuestionarioModalLabel">
+            Registrar Cuestionario
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <!-- Body con el formulario -->
+        <div class="modal-body">
+          <app-cuestionario-form
+            (cerrar)="cerrarModal()"
+            (guardado)="onGuardado($event)"
+          ></app-cuestionario-form>
+        </div>
+      </div>
+    </div>
+  </div>

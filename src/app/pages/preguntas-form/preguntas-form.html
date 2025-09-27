@@ -1,0 +1,108 @@
+<div class="container">
+      <!-- 🟦 Card de Información -->
+  <div class="info-card">
+    <h2>{{ cuestionario?.titulo_cuestionario }}</h2>
+    <p><strong>Tema:</strong> {{ cuestionario?.nom_tema }}</p>
+  </div>
+  <!-- Formulario lado izquierdo -->
+   <div class="cuestionario" *ngIf="cuestionario.tiene_preguntas === 1">
+       <div class="pregunta-card" *ngFor="let p of cuestionariCompleto.preguntas; let i = index">
+    <h3>{{ i+1 }}. {{ p.enunciado_pregunta }}</h3>
+
+    <div class="opciones">
+      <div *ngFor="let o of p.opciones">
+        <label>
+          <input 
+            type="radio" 
+            *ngIf="p.tipo_pregunta === 'OU'"
+            name="pregunta{{p.id_pregunta}}"
+            [value]="o.id_opcion"
+          />
+          <input 
+            type="checkbox" 
+            *ngIf="p.tipo_pregunta === 'OM'"
+            [value]="o.id_opcion"
+          />
+          {{ o.texto_opcion }}
+        </label>
+      </div>
+    </div>
+
+    <small class="feedback">💡 {{ p.feedback_pregunta }}</small>
+  </div>
+   </div>
+   <div *ngIf="cuestionario.tiene_preguntas === 0">
+      <div class="form-preview-wrapper">
+      <div class="form-section">
+    <h2>Crear Pregunta</h2>
+
+    <form [formGroup]="preguntaForm" (ngSubmit)="guardarPregunta()">
+
+        <div>
+            <label>Enunciado</label>
+            <textarea formControlName="enunciado" placeholder="Escribe la pregunta..."></textarea>
+        </div>
+
+        <label>Tipo de Pregunta</label>
+        <select formControlName="tipo">
+        <option *ngFor="let t of tipos" [value]="t.value">{{ t.label }}</option>
+        </select>
+
+        <label>Feedback</label>
+        <textarea formControlName="feedback" placeholder="Escribe la retroalimentación..."></textarea>
+
+         <!-- Opciones dinámicas (solo si no es abierta) -->
+        <div *ngIf="preguntaForm.get('tipo')?.value !== 'abierta'">
+        <h3>Opciones</h3>
+        <button type="button" (click)="addOpcion()">+ Agregar Opción</button>
+
+        <div formArrayName="opciones">        
+            <tr *ngFor="let opcion of opciones.controls; let i = index" [formGroupName]="i">
+                <td class="opcion-row">
+                    <input type="text" formControlName="texto" placeholder="Texto de la opción" />
+                    <label>
+                    <input type="checkbox" formControlName="es_correcta" />
+                    Correcta
+                    </label>
+                    <button type="button" (click)="removeOpcion(i)">❌</button>
+                </td>
+            </tr>
+        </div>
+        </div>
+
+        
+        <button type="submit" [disabled]="preguntaForm.invalid">💾 Guardar Pregunta</button>
+    </form>
+  </div>
+
+  <!-- Vista previa lado derecho -->
+  <div class="preview-section">
+    <h2>Vista Previa</h2>
+    <div *ngIf="preguntasGuardadas.length === 0">
+      <p>No hay preguntas guardadas todavía.</p>
+    </div>
+
+    <div *ngFor="let pregunta of preguntasGuardadas; let i = index" class="preview-card">
+      <h3>{{ i + 1 }}. {{ pregunta.enunciado }}</h3>
+      <ul>
+        <li *ngFor="let opcion of pregunta.opciones">
+          <strong [style.color]="opcion.es_correcta ? 'green' : 'black'">
+            {{ opcion.texto }}
+          </strong>
+        </li>
+      </ul>
+      <div>
+        <strong>Feedback</strong>
+        <h5 class="preview-feedback">{{pregunta.feedback}}</h5>
+      </div>
+      <button type="button" class="btn-eliminar" (click)="eliminarPregunta(i)">🗑 Eliminar</button>
+    </div>
+    <!-- 🟦 Botón Guardar -->
+  <button type="button" class="btn success save-btn" (click)="guardarPreguntasBD()">
+    💾 Guardar Cuestionario
+  </button>
+  </div>
+ </div>
+   </div>
+ 
+</div>

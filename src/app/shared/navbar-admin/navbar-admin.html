@@ -1,0 +1,28 @@
+<aside [class.collapsed]="isCollapsed()">
+      <button class="toggle-btn" (click)="toggle()">☰</button>
+        <div class="user-profile" *ngIf="!isCollapsed()">
+    <img src="../../../assets/img/favicon.ico" alt="Usuario" class="user-avatar" />
+    <span class="user-name">Mi cuenta</span>
+    <a routerLink="/Home" routerLinkActive="active" (click)="logout()">Cerrar Sesión</a>
+  </div>
+      <nav>
+        <a routerLink="/admin/usuarios" [title]="isCollapsed() ? 'Usuarios' : ''">
+          <lucide-icon [img]="UserRoundCog" class="my-icon"></lucide-icon>
+          <span *ngIf="!isCollapsed()">Usuarios</span>
+        </a>
+
+        <a routerLink="/admin/temas" [title]="isCollapsed() ? 'Usuarios' : ''">
+          <lucide-icon [img]="BookA" class="my-icon"></lucide-icon>
+          <span *ngIf="!isCollapsed()">Temas</span>
+        </a>
+        
+        <a routerLink="/admin/cuestionarios" [title]="isCollapsed() ? 'Usuarios' : ''">
+          <lucide-icon [img]="FileQuestionMark" class="my-icon"></lucide-icon>
+          <span *ngIf="!isCollapsed()">Cuestionarios</span>
+        </a>
+
+        <a routerLink="/admin/preguntas" [title]="isCollapsed() ? 'Configuración' : ''">
+          <span *ngIf="!isCollapsed()">Preguntas</span>
+        </a>
+      </nav>
+    </aside>

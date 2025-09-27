@@ -1,0 +1,97 @@
+.navbar-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2186FF;
+  padding: 10px 10px;
+  color: white;
+  position: fixed;   /* 👈 se queda fijo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;     /* 👈 asegura que quede por encima de todo */
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    margin: 0;
+    padding-right: 10px;
+
+    li {
+      flex: 1;
+      text-align: center;
+      margin-right: 30px;
+
+      a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        transition: color 0.3s;
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.3rem;
+        &:hover {
+          color: orange;
+          cursor: pointer;
+        }
+      }
+      .btn-primary {
+          background: #3730a3;
+          color: #fff;
+          border: none;
+          padding: 0.8rem 2rem;
+          border-radius: 15px;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.3s ease;
+          &:hover {
+            background: #E7A53D;
+          }
+        }
+    }
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .navbar-user {
+    flex-wrap: wrap;
+
+    .hamburger {
+      display: block;      
+      padding-right: 20px;
+    }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+
+      &.active {
+        display: flex;
+      }
+
+      li {
+        flex: none;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+

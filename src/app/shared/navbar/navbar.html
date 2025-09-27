@@ -1,0 +1,12 @@
+<nav class="navbar-user">
+  <div class="logo">MiSistema</div>
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+
+  <ul class="nav-links" [class.active]="menuOpen()">
+    <li><a routerLink="/" fragment="inicio" (click)="menuOpen.set(false)">Inicio</a></li>
+    <li><a routerLink="/" fragment="beneficios" (click)="menuOpen.set(false)">Beneficios</a></li>
+    <li><a routerLink="/about" (click)="menuOpen.set(false)">Precios</a></li>
+    <li><a routerLink="/contact" (click)="menuOpen.set(false)">Testimonios</a></li>
+    <li><button class="btn-primary" routerLink="/register" (click)="toggleMenu()">Registrate</button></li>
+  </ul>
+</nav>

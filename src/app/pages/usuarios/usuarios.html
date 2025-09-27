@@ -1,0 +1,37 @@
+<div class="usuarios-container">
+  <h2>Lista de Usuarios</h2>
+
+  <table class="usuarios-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of usuarios; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.nombres }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span [class.admin]="user.rol === 'admin'" [class.usuario]="user.rol === 'usuario'">
+            {{ user.rol | titlecase }}
+          </span>
+        </td>
+        <td>
+          <span class="badge" [class.activo]="user.estado" [class.inactivo]="!user.estado">
+            {{ user.estado ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn editar">Editar</button>
+          <button class="btn eliminar">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

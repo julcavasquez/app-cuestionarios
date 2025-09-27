@@ -1,0 +1,63 @@
+<div class="register-container">
+  <h2>Registro de Usuario</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Nombre -->
+    <div>
+      <label>Nombres</label>
+      <input type="text" formControlName="name" placeholder="Ingrese Nombres Completos"/>
+      <small *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+        El nombre es requerido (mínimo 3 caracteres).
+      </small>
+    </div>
+
+    <!-- Apellidos -->
+    <div>
+      <label>Apellidos</label>
+      <input type="text" formControlName="fullname" placeholder="Ingrese Apellidos Completos"/>
+      <small *ngIf="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched">
+        Los apellidos son requerido (mínimo 3 caracteres).
+      </small>
+    </div>
+
+
+    <!-- Email -->
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" placeholder="ejemplo@correo.com"/>
+      <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        Ingresa un email válido.
+      </small>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" placeholder="************"/>
+      <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        La contraseña debe tener al menos 6 caracteres.
+      </small>
+    </div>
+
+    <!-- Confirmar Password -->
+    <div>
+      <label>Confirmar Contraseña</label>
+      <input type="password" formControlName="confirmPassword" placeholder="************"/>
+      <small *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+        Las contraseñas no coinciden.
+      </small>
+    </div>
+
+    <!-- Botón -->
+    <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+    <!-- <button (click)="loginAdmin()">Logout</button> -->
+  </form>
+  <p class="mt-2">{{ mensaje }}</p>
+  <div *ngIf="registerForm">
+  <!-- Debug
+  <pre>{{ registerForm.getRawValue() | json }}</pre>
+  <pre>Valid: {{ registerForm.valid }}</pre>
+  <pre>Errors: {{ registerForm.errors | json }}</pre> -->
+</div>
+</div>

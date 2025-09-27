@@ -1,0 +1,13 @@
+<ng-container *ngIf="usuarioService.esAdmin(); else noAccess">
+      <div class="admin-container">
+        <h1>Bienvenido al Dashboard Admin</h1>
+      <p>Usuario: {{ usuarioService.usuarioActual()?.nombres }}</p>
+      <button *ngIf="usuarioService.estaLogueado()" (click)="logout()">Logout</button>
+      <!-- Aquí puedes agregar widgets, gráficas, tablas, etc. -->
+      </div>
+     
+</ng-container>
+
+    <ng-template #noAccess>
+      <p>No tienes permiso para acceder a esta sección.</p>
+    </ng-template>
