@@ -15,6 +15,7 @@ export class PreguntasForm implements OnInit{
 cuestionario : any = {};
 cuestionariCompleto : any = {};
 cuestionarioId!: number;
+ letras = ['a','b','c','d','e','f','g','h']; 
 constructor(private fb: FormBuilder,
   private route: ActivatedRoute,
   private cuestionarioService: CuestionariosService,

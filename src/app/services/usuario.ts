@@ -17,50 +17,56 @@ export class UsuarioService {
   private apiUrl = environment.apiUrl+'/usuarios';
 
   // Signal que mantiene el usuario actual
-  usuarioActual = signal<Usuario | null>(null);
+  usuarioActual : any = null;
 
   constructor(private http: HttpClient) {
     // Intentar cargar usuario desde localStorage al iniciar    
-    const usuarioGuardado = localStorage.getItem('usuario');
+    const usuarioGuardado = localStorage.getItem('usuario');    
     if (usuarioGuardado) {
-      this.usuarioActual.set(JSON.parse(usuarioGuardado));
+      this.usuarioActual = JSON.parse(usuarioGuardado);
+      console.log(this.usuarioActual);
     }
   }
 
   // Simula login
   loginUsu(usuario:any) {
-  this.usuarioActual.set(usuario);
+  this.usuarioActual = usuario;
   localStorage.setItem('usuario', JSON.stringify(usuario));
-  console.log('Usuario logueado:', usuario);
-  console.log(this.usuarioActual()?.rol);
   }
 
   // Logout
   logout() {
-    this.usuarioActual.set(null);
+    this.usuarioActual = null;
     localStorage.removeItem('usuario');
     console.log('Usuario deslogueado');
   }
 
   // Verifica si hay usuario logueado
   estaLogueado(): boolean {
-    return this.usuarioActual() !== null;
+    return this.getUsuario() !== null;
   }
 
   // Verifica si es admin
   esAdmin(): boolean {
-    return this.usuarioActual()?.rol === 'admin';
+    return this.getUsuario()?.rol === 'admin';
   }
+
+  // Verifica si es Estudiante
+  esEstudiante(): boolean {
+    return this.getUsuario()?.rol === 'estudiante';
+  }
+
 
   // Actualiza datos del usuario
-  actualizarUsuario(datos: Partial<Usuario>) {
-    const usuario = this.usuarioActual();
-    if (usuario) {
-      this.usuarioActual.set({ ...usuario, ...datos });
-    }
-  }
+  // actualizarUsuario(datos: Partial<Usuario>) {
+  //   const usuario = this.usuarioActual();
+  //   if (usuario) {
+  //     this.usuarioActual.set({ ...usuario, ...datos });
+  //   }
+  // }
 
-   getUsuario() {
+   getUsuario() {    
+    console.log('hola getUsuario'+this.usuarioActual)
     if (!this.usuarioActual) {
       const data = localStorage.getItem('usuario');
       this.usuarioActual = data ? JSON.parse(data) : null;
@@ -69,7 +75,7 @@ export class UsuarioService {
   }
 
   getUsuarioId(): number | null {
-    return this.usuarioActual()?.id ?? null;
+    return this.getUsuario()?.userId ?? null;
   }
 
   getUsuarios(): Observable<any[]> {

@@ -10,8 +10,9 @@
     <h3>{{ i+1 }}. {{ p.enunciado_pregunta }}</h3>
 
     <div class="opciones">
-      <div *ngFor="let o of p.opciones">
+      <div *ngFor="let o of p.opciones; let j = index">       
         <label>
+           {{ letras[j] }}.
           <input 
             type="radio" 
             *ngIf="p.tipo_pregunta === 'OU'"

@@ -7,6 +7,40 @@
     <li><a routerLink="/" fragment="beneficios" (click)="menuOpen.set(false)">Beneficios</a></li>
     <li><a routerLink="/about" (click)="menuOpen.set(false)">Precios</a></li>
     <li><a routerLink="/contact" (click)="menuOpen.set(false)">Testimonios</a></li>
-    <li><button class="btn-primary" routerLink="/register" (click)="toggleMenu()">Registrate</button></li>
+    <li><button class="btn-primary" *ngIf="usuario?.rol !== 'estudiante'" routerLink="/register" (click)="toggleMenu()">Registrate</button></li>
+    
+    <!-- Si está logueado -->
+        
+        <li class="nav-item user-info" *ngIf="usuario?.rol === 'estudiante'">
+            <div class="d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+    <!-- Texto -->
+    <div class="me-2 user-text">
+      <div class="line1">Hola, {{ usuario.nombres }} {{ usuario.apellidos }}</div>
+      <div class="line2">{{ usuario.rol | titlecase }}</div>
+    </div>
+
+    <!-- Avatar -->
+     <i class="bi bi-person-circle fs-4 me-2"></i>
+
+    <!-- Dropdown -->
+   <!-- Icono ▼ -->
+    <i class="bi bi-caret-down-fill ms-1"></i>
+  </div>
+   <!-- Dropdown Menu -->
+  <ul class="dropdown-menu dropdown-menu-end">
+    <!-- <li>
+      <a class="dropdown-item" routerLink="/perfil">👤 Perfil</a>
+    </li>
+    <li>
+      <a class="dropdown-item" routerLink="/configuracion">⚙️ Configuración</a>
+    </li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li> -->
+    <li>
+      <a class="dropdown-item text-danger" (click)="logout()">🚪 Cerrar sesión</a>
+    </li>
+  </ul>
+    </li>
   </ul>
 </nav>

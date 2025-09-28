@@ -45,13 +45,18 @@ export class LoginForm {
         alert('✅ Login exitoso');
         if(res.rol == 'admin'){
             this.router.navigate(['/admin/dashboard']);
+        }else{
+          if(res.rol == 'estudiante'){
+             this.router.navigate(['/estudiante/panel']);
+          }
         }
         // 👉 Redirigir al home
         //this.router.navigate(['/home']);
       },
       error: (err) => {
         //this.mensaje = '❌ Error: ' + err.error?.message;
-        console.error(err);
+        console.log(err.error);
+        alert('✅ Acceso Denegado: ' + err.error.message);
       }
     });
   }

@@ -12,7 +12,11 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
     if (usuarioService.esAdmin()) {
       router.navigate(['/admin/dashboard']);
     } else {
-      router.navigate(['/home']);
+      if(usuarioService.esEstudiante()){
+           router.navigate(['/estudiante/panel']);
+      }else{
+        router.navigate(['/home']);
+      }
     }
     return false;
   }

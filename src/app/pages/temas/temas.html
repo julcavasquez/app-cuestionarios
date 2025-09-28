@@ -1,31 +1,84 @@
-<div class="tema-container">
-  <h2>Lista de Temas</h2>
-
-  <table class="tema-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let t of temas">
-        <td>{{ t.id_tema }}</td>
+<div class="container mt-4">
+  <h2 class="mb-3">📚 Lista de Temas</h2>
+  <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#temasModal"
+    >
+      ➕ Nuevo Tema
+    </button>
+  
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-primary">
+        <tr class="text-center">
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of temas | paginate: { itemsPerPage: 5, currentPage: page }">
+            <td>{{ t.id_tema }}</td>
         <td>{{ t.nom_tema }}</td>
-        <td>{{ t.descripcion_tema }}</td>
-        <td>
+        <td [attr.title]="t.descripcion_tema">{{ t.descripcion_tema | slice:0:30 }}{{ t.descripcion_tema.length > 30 ? '...' : '' }}</td>
+        <td class="text-center">
           <span class="badge" [class.activo]="t.estado_tema" [class.inactivo]="!t.estado_tema">
             {{ t.estado_tema ? 'activo' : 'inactivo' }}
           </span>
         </td>
         <td>
-          <button class="btn editar">Editar</button>
-          <button class="btn eliminar">Eliminar</button>
+          <button class="btn btn-success editar">Editar</button>
+          <button class="btn btn-danger eliminar">Eliminar</button>
         </td>
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📌 Controles de paginación -->
+  <pagination-controls
+    (pageChange)="page = $event"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    class="d-flex justify-content-center mt-3"
+  >
+  </pagination-controls>
 </div>
+
+ <!-- 📌 Modal de Bootstrap -->
+  <div
+    class="modal fade"
+    id="temasModal"
+    tabindex="-1"
+    aria-labelledby="cuestionarioModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="cuestionarioModalLabel">
+            Registrar Tema
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <!-- Body con el formulario -->
+        <div class="modal-body">
+          <app-temas-form
+            (cerrar)="cerrarModal()"
+            (guardado)="onGuardado($event)"
+          ></app-temas-form>
+        </div>
+      </div>
+    </div>
+  </div>

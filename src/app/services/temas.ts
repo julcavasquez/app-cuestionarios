@@ -15,4 +15,9 @@ export class TemasService {
   addCuestionario(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
   }
+
+  registrarTema(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
 }

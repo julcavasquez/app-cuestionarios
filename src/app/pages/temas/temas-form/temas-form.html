@@ -1,0 +1,36 @@
+<form [formGroup]="temaForm" (ngSubmit)="onSubmit()" class="p-3" autocomplete="off">
+  <div class="row">
+    <!-- 📌 Tema -->
+    <div class="col-md-6 mb-3">
+      <label for="nombre_tema" class="form-label">Nombre del Tema</label>
+       <input
+        id="nombre_tema"
+        type="text"
+        formControlName="nombre_tema"
+        class="form-control"
+        placeholder="Ejemplo: Matemáticas"
+      />
+    </div>
+    
+    <!-- 📌 Descripción -->
+    <div class="col-12 mb-3">
+      <label for="descripcion_tema" class="form-label">Descripción</label>
+      <textarea
+        id="descripcion_tema"
+        formControlName="descripcion_tema"
+        class="form-control"
+        placeholder="Breve descripción del tema"
+        maxlength="250"
+        rows="3"
+      ></textarea>
+    </div>
+
+    
+  </div>
+
+  <!-- 📌 Botones -->
+  <div class="d-flex justify-content-end gap-2 mt-3">
+    <button type="submit" class="btn btn-success" [disabled]="temaForm.invalid">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+  </div>
+</form>

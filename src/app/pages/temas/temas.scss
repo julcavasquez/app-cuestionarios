@@ -2,34 +2,21 @@
   padding: 20px;
 }
 
-.tema-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
 
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #2186FF;
+  color: #fff;
+}
 
-  th {
-    background: #2c3e50;
-    color: white;
-  }
+.table-responsive{
+  margin-top: 15px;
 
-  tr:hover {
-    background: #f1f1f1;
-  }
-
-  .admin {
-    color: #e74c3c;
-    font-weight: bold;
-  }
-
-  .usuario {
-    color: #3498db;
-    font-weight: bold;
+  button{
+    margin-left: 5px;
   }
 
   .badge {
@@ -48,27 +35,16 @@
       color: white;
     }
   }
+}
+.table {
+  font-size: 1rem;
+}
 
-  .btn {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-right: 5px;
-    font-size: 14px;
+.table th {
+  background-color: #2186ff;
+  color: white;
+}
 
-    &.editar {
-      background: #3498db;
-      color: white;
-    }
-
-    &.eliminar {
-      background: #e74c3c;
-      color: white;
-    }
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
+.pagination {
+  margin-top: 15px;
 }

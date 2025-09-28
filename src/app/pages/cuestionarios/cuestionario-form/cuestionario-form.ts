@@ -3,6 +3,7 @@ import { ReactiveFormsModule,FormBuilder, FormGroup, Validators } from '@angular
 import { CommonModule } from '@angular/common';
 import { TemasService } from '../../../services/temas';
 import { UsuarioService } from '../../../services/usuario';
+import {CuestionariosService} from '../../../services/cuestionarios';
 @Component({
   selector: 'app-cuestionario-form',
   standalone: true,
@@ -21,7 +22,8 @@ export class CuestionarioForm implements OnInit {
    constructor(
     private fb: FormBuilder,
     private temasService: TemasService,
-    private usuarioService : UsuarioService
+    private usuarioService : UsuarioService,
+    private cuestionariosService : CuestionariosService
   ) {}
 
    ngOnInit(): void {
@@ -46,10 +48,23 @@ export class CuestionarioForm implements OnInit {
     if (this.cuestionarioForm.valid) {
        const idUsuario = this.usuarioService.getUsuarioId();
        console.log(idUsuario);
-    //    const payload = {
-    //   ...this.cuestionarioForm.value,
-    //   id_usu: idUsuario
-    // };
+       const payload = {
+          ...this.cuestionarioForm.value,
+          id_usu: idUsuario
+        };
+        this.cuestionariosService.guardarCuestionario(payload).subscribe({
+        next: (res) => {
+          alert('✅ Cuestionario registrado con éxito');
+          this.guardado.emit(res);
+          this.cuestionarioForm.reset({
+              id_tema: ""
+            });
+        },
+        error: (err) => {
+           alert('❌ Error al guardar cuestionario: ' + err);
+          console.error('❌ Error al guardar cuestionario:', err);
+        },
+      });
 
     // this.cuestionarioService.guardarCuestionario(payload).subscribe({
     //   next: res => {
@@ -67,8 +82,8 @@ export class CuestionarioForm implements OnInit {
     //       console.error('❌ Error al guardar cuestionario:', err);
     //     },
     //   });
-    // } else {
-    //   alert('⚠️ Completa todos los campos');
+    } else {
+     alert('⚠️ Completa todos los campos');
     }
   }
 

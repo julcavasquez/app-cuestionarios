@@ -6,12 +6,14 @@ import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { UsuarioService } from './services/usuario';
 import { adminGuard } from './services/admin.guard';
 import { noAuthGuard } from './services/no-auth.guard';
+import { estudainteGuard } from './services/estudiante.guard';
 import { PublicLayout } from './layouts/public-layout';
 import { AdminLayout } from './layouts/admin-layout';
 import { Usuarios } from './pages/usuarios/usuarios';
 import { Temas } from './pages/temas/temas';
 import { Cuestionarios } from './pages/cuestionarios/cuestionarios';
 import { PreguntasForm } from './pages/preguntas-form/preguntas-form';
+import { Panel } from './pages/panel/panel';
 export const routes: Routes = [
    {
     path: '',
@@ -34,6 +36,15 @@ export const routes: Routes = [
       { path: 'cuestionarios', component: Cuestionarios },
       { path: 'preguntas/:id', component: PreguntasForm },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  },
+  {
+    path: 'estudiante',
+    component: PublicLayout,
+    canActivate: [estudainteGuard],
+    children: [
+      { path: 'panel', component: Panel },
+      { path: '', redirectTo: 'panel', pathMatch: 'full' }
     ]
   },
   { path: '**', redirectTo: 'inicio' }

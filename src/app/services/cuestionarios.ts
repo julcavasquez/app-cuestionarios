@@ -24,6 +24,10 @@ export class CuestionariosService {
     return this.http.post(`${this.apiUrl}/preguntas`, payload);
   }
 
+  guardarCuestionario(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, payload);
+  }
+
    getCuestionarioCompleto(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}/completo`);
   }
