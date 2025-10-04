@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CuestionariosService } from '../../services/cuestionarios';
+import { PreguntasService } from '../../services/preguntas';
 import { RouterModule } from '@angular/router';
 import { CuestionarioForm } from './cuestionario-form/cuestionario-form'; 
 
@@ -15,10 +16,12 @@ declare var bootstrap: any; // 👈 aquí declaras bootstrap
 })
 export class Cuestionarios implements OnInit {
   cuestionarios: any[] = [];
-  constructor(private cuestionariosService: CuestionariosService) {}
+  constructor(private cuestionariosService: CuestionariosService,
+    private preguntasService: PreguntasService
+  ) {}
  mostrarModal = false;
   ngOnInit() {
-    this.cuestionariosService.getCuestionarios().subscribe(data => {
+    this.preguntasService.getPreguntas().subscribe(data => {
       this.cuestionarios = data;
     });
   }

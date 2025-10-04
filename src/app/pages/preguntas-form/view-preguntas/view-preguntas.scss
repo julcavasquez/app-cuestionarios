@@ -1,0 +1,103 @@
+.opciones {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Contenedor de cada opción */
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  user-select: none;
+}
+
+/* Hover */
+.opcion:hover {
+  border-color: #2186ff;
+  background: #f5f9ff;
+}
+
+/* Ocultar inputs nativos */
+.opcion input[type="radio"],
+.opcion input[type="checkbox"] {
+  display: none;
+}
+
+/* Círculo con la letra (A, B, C, D) */
+.opcion .letra {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ddd;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* Texto de la opción */
+.opcion .texto {
+  flex: 1;
+}
+
+/* ✅ Cuando está seleccionado */
+.opcion input[type="radio"]:checked ~ .letra,
+.opcion input[type="checkbox"]:checked ~ .letra {
+  background: #2186ff;
+  color: white;
+}
+
+.opcion input[type="radio"]:checked ~ .texto,
+.opcion input[type="checkbox"]:checked ~ .texto {
+  color: #2186ff;
+  font-weight: bold;
+}
+
+
+.feedback-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-left: 5px solid #2186ff;
+  background: #f5f9ff;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease;
+}
+
+.feedback-icon {
+  font-size: 1.5rem;
+  color: #2186ff;
+}
+
+.feedback-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

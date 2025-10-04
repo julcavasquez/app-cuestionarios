@@ -1,11 +1,11 @@
 <div class="container">
       <!-- 🟦 Card de Información -->
-  <div class="info-card">
+  <!-- <div class="info-card">
     <h2>{{ cuestionario?.titulo_cuestionario }}</h2>
     <p><strong>Tema:</strong> {{ cuestionario?.nom_tema }}</p>
-  </div>
+  </div> -->
   <!-- Formulario lado izquierdo -->
-   <div class="cuestionario" *ngIf="cuestionario.tiene_preguntas === 1">
+   <!-- <div class="cuestionario" *ngIf="cuestionario.tiene_preguntas === 1">
        <div class="pregunta-card" *ngFor="let p of cuestionariCompleto.preguntas; let i = index">
     <h3>{{ i+1 }}. {{ p.enunciado_pregunta }}</h3>
 
@@ -31,14 +31,18 @@
 
     <small class="feedback">💡 {{ p.feedback_pregunta }}</small>
   </div>
-   </div>
-   <div *ngIf="cuestionario.tiene_preguntas === 0">
-      <div class="form-preview-wrapper">
-      <div class="form-section">
+   </div> -->
+   <div>
+      <div class="form-preview-wrapper" >
+      <div class="form-section" *ngIf="preguntasGuardadas.length === 0">
     <h2>Crear Pregunta</h2>
 
     <form [formGroup]="preguntaForm" (ngSubmit)="guardarPregunta()">
-
+        <label for="id_tema" class="form-label">Tema</label>
+        <select id="id_tema" formControlName="id_tema" >
+        <option value="">-- Selecciona un tema --</option>
+        <option *ngFor="let te of temas" [value]="te.id_tema">{{ te.nom_tema }}</option>
+        </select>
         <div>
             <label>Enunciado</label>
             <textarea formControlName="enunciado" placeholder="Escribe la pregunta..."></textarea>
@@ -77,12 +81,17 @@
   </div>
 
   <!-- Vista previa lado derecho -->
-  <div class="preview-section">
+  <div class="preview-section" *ngIf="preguntasGuardadas.length === 1"> 
     <h2>Vista Previa</h2>
-    <div *ngIf="preguntasGuardadas.length === 0">
-      <p>No hay preguntas guardadas todavía.</p>
+    <div class="info-card">
+      <div *ngIf="temas.length > 0; else cargando">
+      <p>Tema: {{ getNombreTema(preguntasGuardadas[0].id_tema) }}</p>
     </div>
 
+    <ng-template #cargando>
+      <p>Cargando temas...</p>
+    </ng-template>
+    </div>
     <div *ngFor="let pregunta of preguntasGuardadas; let i = index" class="preview-card">
       <h3>{{ i + 1 }}. {{ pregunta.enunciado }}</h3>
       <ul>
@@ -98,11 +107,10 @@
       </div>
       <button type="button" class="btn-eliminar" (click)="eliminarPregunta(i)">🗑 Eliminar</button>
     </div>
-    <!-- 🟦 Botón Guardar -->
   <button type="button" class="btn success save-btn" (click)="guardarPreguntasBD()">
     💾 Guardar Cuestionario
   </button>
-  </div>
+  </div> 
  </div>
    </div>
  

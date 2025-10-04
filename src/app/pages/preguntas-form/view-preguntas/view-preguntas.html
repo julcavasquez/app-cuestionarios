@@ -1,0 +1,42 @@
+<p>view-preguntas works!</p>
+<div class="container">
+  <div class="info-card">
+    <p><strong>Tema:</strong> {{ pregunta.nom_tema }}</p>
+  </div> 
+
+   <div class="cuestionario">
+       <div class="pregunta-card">
+    <h3>{{ pregunta.enunciado_pregunta }}</h3>
+
+    <div class="opciones">
+      <div *ngFor="let o of opciones; let j = index">       
+        <label class="opcion">
+          <input 
+            type="radio" 
+            *ngIf="pregunta.tipo_pregunta === 'OU'"
+            name="pregunta{{pregunta.id_pregunta}}"
+            [value]="o.id_opcion"
+            [checked]="o.es_correcta"
+          />
+          <input 
+            type="checkbox" 
+            *ngIf="pregunta.tipo_pregunta === 'OM'"
+            [value]="o.id_opcion"
+            [checked]="o.es_correcta"
+          />
+           <span class="letra">{{ letras[j] }}</span>
+          <span>{{ o.texto_opcion }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="feedback-card" *ngIf="pregunta.feedback_pregunta">
+  <div class="feedback-icon">💡</div>
+  <div class="feedback-text">
+    {{ pregunta.feedback_pregunta }}
+  </div>
+</div>
+  </div>
+   </div>
+
+</div>

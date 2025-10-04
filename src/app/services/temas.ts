@@ -20,4 +20,8 @@ export class TemasService {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
+  getTemasCantidad(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/temascantidad`);
+  }
+
 }

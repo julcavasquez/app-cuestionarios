@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } fr
 import { ActivatedRoute } from '@angular/router';
 import { CuestionariosService } from '../../services/cuestionarios';
 import { PreguntasService } from '../../services/preguntas';
+import { TemasService } from '../../services/temas';
 @Component({
   selector: 'app-preguntas-form',
   standalone: true,
@@ -16,11 +17,14 @@ cuestionario : any = {};
 cuestionariCompleto : any = {};
 cuestionarioId!: number;
  letras = ['a','b','c','d','e','f','g','h']; 
+ temas: any[] = [];
 constructor(private fb: FormBuilder,
   private route: ActivatedRoute,
   private cuestionarioService: CuestionariosService,
+  private temasService: TemasService,
 private preguntasService : PreguntasService) {
     this.preguntaForm = this.fb.group({
+      id_tema: ['', Validators.required],
       enunciado: ['', Validators.required],
       tipo: ['OU', Validators.required],
       feedback: [''],
@@ -28,28 +32,37 @@ private preguntasService : PreguntasService) {
     });
   }
   ngOnInit() {
-    this.cuestionarioId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('📌 ID recibido:', this.cuestionarioId);
+    // this.cuestionarioId = Number(this.route.snapshot.paramMap.get('id'));
+    // console.log('📌 ID recibido:', this.cuestionarioId);
 
-    // Aquí puedes hacer una petición al backend:
-    // Llamada al backend
-    this.cuestionarioService.getCuestionarioId(this.cuestionarioId).subscribe({
-      next: (data) => {
-        this.cuestionario = data;
-        console.log('✅ Cuestionario:', this.cuestionario);
-         this.cuestionarioService.getCuestionarioCompleto(this.cuestionarioId).subscribe({
-              next: (data) => {
-                this.cuestionariCompleto = data
-                 console.log('✅ Cuestionario:', this.cuestionariCompleto);
-              },
-              error: (err) => console.error(err)
-            });
-      },
-      error: (err) => {
-        console.error('❌ Error cargando cuestionario:', err);
-      }
+    // // Aquí puedes hacer una petición al backend:
+    // // Llamada al backend
+    // this.cuestionarioService.getCuestionarioId(this.cuestionarioId).subscribe({
+    //   next: (data) => {
+    //     this.cuestionario = data;
+    //     console.log('✅ Cuestionario:', this.cuestionario);
+    //      this.cuestionarioService.getCuestionarioCompleto(this.cuestionarioId).subscribe({
+    //           next: (data) => {
+    //             this.cuestionariCompleto = data
+    //              console.log('✅ Cuestionario:', this.cuestionariCompleto);
+    //           },
+    //           error: (err) => console.error(err)
+    //         });
+    //   },
+    //   error: (err) => {
+    //     console.error('❌ Error cargando cuestionario:', err);
+    //   }
+    // });
+    this.cargarTemas();
+  }
+
+    cargarTemas() {
+    this.temasService.getTemas().subscribe({
+      next: (res) => (this.temas = res),
+      error: (err) => console.error(err),
     });
   }
+
   preguntaForm: FormGroup;
   preguntasGuardadas: any[] = []; // 👉 aquí se almacenan las preguntas
   tipos = [
@@ -99,6 +112,7 @@ private preguntasService : PreguntasService) {
       this.preguntaForm.reset({
         enunciado: '',
         tipo: 'OU',   // 👈 valor fijo
+        id_tema: '',   // 👈 valor fijo
         feedback:'',
         opciones: []
       });
@@ -117,7 +131,6 @@ private preguntasService : PreguntasService) {
     }
 
     const payload = {
-      cuestionarioId: this.cuestionarioId,
       preguntas: this.preguntasGuardadas
     };
 
@@ -132,5 +145,10 @@ private preguntasService : PreguntasService) {
         console.error('❌ Error al guardar preguntas', err);
       }
     });
+  }
+
+  getNombreTema(id: number): string {
+    console.log(id);
+    return this.temas.find(t => t.id_tema === Number(id))?.nom_tema || 'No encontrado';
   }
 }

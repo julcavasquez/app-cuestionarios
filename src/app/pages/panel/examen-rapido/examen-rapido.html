@@ -1,0 +1,110 @@
+<div class="examen-container">
+  <!-- Panel izquierdo - Configuración -->
+  <div class="card panel-config">
+    <div *ngIf="!examenIniciado" >
+         <h2>Configura tu examen rápido</h2>
+    <form *ngIf="configForm" [formGroup]="configForm">
+  <div formArrayName="temas">
+    <div class="tema" *ngFor="let tema of listtemas; let i = index"  [formGroupName]="i">
+      <label>
+        <input type="checkbox" formControlName="activo" (change)="toggleSlider(i)" />
+       {{ temasArray.at(i).get('nom_tema')?.value }}
+      </label>
+       <!-- Slider (habilitado solo si está activo) -->
+      <div class="slider-container" [class.disabled]="!temasArray.at(i).get('activo')?.value">
+        <!-- <input 
+          type="range" 
+          min="0" 
+          step="1"
+          [max]="temasArray.at(i).get('max_preguntas')?.value"
+          formControlName="cantidad"
+          (input)="onSliderChange(i)"  
+        /> -->
+        <input 
+          type="range" 
+          min="0" 
+          step="1"
+          [max]="maxPreguntas"
+          formControlName="cantidad"
+          (input)="onSliderChange(i)"
+        />
+        <span class="slider-value">{{ temasArray.at(i).get('cantidad')?.value }}</span>
+      </div>
+
+    </div>
+  </div>
+</form>
+<!-- total seleccionado -->
+<div class="total-container" [ngClass]="{'error': totalSeleccionadas > maxPreguntas}">
+  <strong>Total preguntas seleccionadas: {{ totalSeleccionadas }} / {{ maxPreguntas }}</strong>
+</div>
+<!-- 
+  <pre>{{ configForm.getRawValue() | json }}</pre>
+  <pre>Valid: {{ configForm.valid }}</pre>
+  <pre>Errors: {{ configForm.errors | json }}</pre>  -->
+<button *ngIf="configForm" type="button" class="btn" (click)="empezarExamen()">Empezar</button>
+    </div>
+ <!-- Después de empezar: mostrar resumen -->
+    <div *ngIf="examenIniciado" class="resumen">
+      <h4>Resumen de tu configuración:</h4>
+      <ul>
+        <li *ngFor="let r of resumenSeleccion">
+          {{ r.nom_tema }} → {{ r.cantidad }} preguntas
+        </li>
+      </ul>
+      <p><strong>Total: {{ totalSeleccionadas }}</strong></p>
+    </div>
+</div>
+  
+  
+
+  <!-- Panel derecho - Preguntas -->
+  <div class="card panel-examen">
+     <div *ngIf="!examenIniciado" class="placeholder">
+    <img src="assets/img/waiting.png" alt="Esperando configuración" class="placeholder-img">
+    <p class="placeholder-text">⚡ Selecciona temas y cantidad de preguntas para un examen express.</p>
+  </div>
+   <div *ngIf="examenIniciado" class="preguntas">
+     <p><small>Pregunta {{ preguntaIndex+1 }} de {{ preguntas.length }}</small></p>
+      <h3>{{ preguntas[preguntaIndex]?.enunciado_pregunta }}</h3>
+       <div class="opciones" *ngFor="let o of preguntas[preguntaIndex]?.opciones; let j = index">
+         
+        <label class="opcion">
+          <input 
+            type="radio" 
+            *ngIf="preguntas[preguntaIndex]?.tipo_pregunta === 'OU'"
+            name="pregunta{{preguntas[preguntaIndex]?.id_pregunta}}"
+            [value]="o.id_opcion"
+          />
+          <input 
+            type="checkbox" 
+            *ngIf="preguntas[preguntaIndex]?.tipo_pregunta === 'OM'"
+            [value]="o.id_opcion"
+          />
+           <span class="letra">{{ letras[j] }}</span>
+          <span>{{ o.texto_opcion }}</span>
+          </label>
+        </div>
+      <div class="controls">
+        <button (click)="anteriorPregunta()" [disabled]="preguntaIndex === 0">Anterior</button>
+        <button (click)="siguientePregunta()" [disabled]="preguntaIndex === preguntas.length - 1">Siguiente</button>
+      </div>
+
+    </div>
+  </div>
+    <!-- <div *ngIf="preguntas.length > 0">
+      <div *ngFor="let p of preguntas; let i = index" class="pregunta-card">
+        <h3>{{ i + 1 }}. {{ p.enunciado }}</h3>
+        <div class="opcion" *ngFor="let o of p.opciones; let j = index">
+          <label>
+            <input 
+              [type]="p.tipo === 'OU' ? 'radio' : 'checkbox'" 
+              name="pregunta{{p.id}}" 
+              [value]="o.id" 
+            />
+            {{ letras[j] }}. {{ o.texto }}
+          </label>
+        </div>
+      </div>
+    </div> -->
+</div>

@@ -29,6 +29,6 @@ export class CuestionariosService {
   }
 
    getCuestionarioCompleto(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}/completo`);
+    return this.http.get(`${this.apiUrl}/${id}/opciones`);
   }
 }

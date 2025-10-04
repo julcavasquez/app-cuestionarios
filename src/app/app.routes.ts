@@ -13,7 +13,9 @@ import { Usuarios } from './pages/usuarios/usuarios';
 import { Temas } from './pages/temas/temas';
 import { Cuestionarios } from './pages/cuestionarios/cuestionarios';
 import { PreguntasForm } from './pages/preguntas-form/preguntas-form';
+import { ViewPreguntas } from './pages/preguntas-form/view-preguntas/view-preguntas';
 import { Panel } from './pages/panel/panel';
+import { ExamenRapido } from './pages/panel/examen-rapido/examen-rapido';
 export const routes: Routes = [
    {
     path: '',
@@ -34,7 +36,8 @@ export const routes: Routes = [
       { path: 'usuarios', component: Usuarios },
       { path: 'temas', component: Temas },
       { path: 'cuestionarios', component: Cuestionarios },
-      { path: 'preguntas/:id', component: PreguntasForm },
+      { path: 'preguntas/:id', component: ViewPreguntas },
+      { path: 'preguntas/', component: PreguntasForm },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
@@ -44,6 +47,7 @@ export const routes: Routes = [
     canActivate: [estudainteGuard],
     children: [
       { path: 'panel', component: Panel },
+      { path: 'examen-rapido', component: ExamenRapido },
       { path: '', redirectTo: 'panel', pathMatch: 'full' }
     ]
   },

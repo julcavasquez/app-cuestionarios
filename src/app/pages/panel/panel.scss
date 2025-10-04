@@ -1,0 +1,104 @@
+
+ .page-wrapper{
+    min-height: calc(100vh - 500px); /* ajustar si tienes navbar/footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #fafcff 0%, #f6f9ff 100%);
+    padding: 40px 20px;
+  }
+
+  .cards-container{
+    display: flex;
+    gap: 24px;
+    width: min(1100px, 96%);
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .card{
+    flex: 1 1 300px; /* crece, base 300px */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(33,134,255,0.08);
+    border: 1px solid rgba(15,23,42,0.04);
+    transition: transform .18s ease, box-shadow .18s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+  }
+
+  .card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 30px rgba(33,134,255,0.12);
+  }
+
+  .card-body{
+    padding: 22px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .card-title{
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .card-desc{
+    margin: 0 0 18px 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    min-height: 42px;
+  }
+
+  .card-btn{
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 10px;
+    color: #032020;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(33,134,255,0.18);
+    transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .btn-trivia{
+    background-color: #17e290;
+       
+  }
+
+  .btn-express{
+     background-color: #153e86;
+     color: #fafcff;
+  }
+
+  .btn-simulador{
+     background-color: #f8b546;
+  }
+
+  .card-btn:hover{ transform: translateY(-2px); }
+
+  /* Responsive: columnas apiladas en pantallas pequeñas */
+  @media (max-width: 860px){
+    .cards-container{
+      gap: 16px;
+    }
+    .card{ min-height: 200px; }
+  }
+
+  @media (max-width: 520px){
+    .cards-container{
+      flex-direction: column;
+      align-items: center;
+    }
+    .card{ width: 100%; }
+    .card-btn{ max-width: 100%; }
+  }

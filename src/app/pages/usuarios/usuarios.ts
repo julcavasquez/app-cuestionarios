@@ -24,6 +24,7 @@ export class Usuarios {
   ngOnInit() {
     this.usuarioService.getUsuarios().subscribe(data => {
       this.usuarios = data;
+      console.log(data);
     });
   }
   

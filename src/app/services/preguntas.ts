@@ -11,4 +11,12 @@ export class PreguntasService {
   guardarPreguntas(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, payload);
   }
+
+  getPreguntas(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+   obtenerPreguntasPorConfig(payload: any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/configuracion`, payload);
+  }
 }
