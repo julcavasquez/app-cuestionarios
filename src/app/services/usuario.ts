@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 export interface Usuario {
   id: number;
   nombres: string;
@@ -17,43 +18,44 @@ export class UsuarioService {
   private apiUrl = environment.apiUrl+'/usuarios';
 
   // Signal que mantiene el usuario actual
-  usuarioActual : any = null;
+  private usuarioActual = new BehaviorSubject<any>(null);
+  usuario$ = this.usuarioActual.asObservable();
 
   constructor(private http: HttpClient) {
     // Intentar cargar usuario desde localStorage al iniciar    
     const usuarioGuardado = localStorage.getItem('usuario');    
     if (usuarioGuardado) {
-      this.usuarioActual = JSON.parse(usuarioGuardado);
+      this.usuarioActual.next(JSON.parse(usuarioGuardado));
       console.log(this.usuarioActual);
     }
   }
 
   // Simula login
   loginUsu(usuario:any) {
-  this.usuarioActual = usuario;
   localStorage.setItem('usuario', JSON.stringify(usuario));
+    this.usuarioActual.next(usuario);
   }
 
   // Logout
   logout() {
-    this.usuarioActual = null;
     localStorage.removeItem('usuario');
+    this.usuarioActual.next(null);
     console.log('Usuario deslogueado');
   }
 
   // Verifica si hay usuario logueado
   estaLogueado(): boolean {
-    return this.getUsuario() !== null;
+    return !!this.usuarioActual.value;
   }
 
   // Verifica si es admin
   esAdmin(): boolean {
-    return this.getUsuario()?.rol === 'admin';
+    return this.usuarioActual.value?.rol === 'admin';
   }
 
   // Verifica si es Estudiante
   esEstudiante(): boolean {
-    return this.getUsuario()?.rol === 'estudiante';
+    return this.usuarioActual.value?.rol === 'estudiante';
   }
 
 
@@ -66,16 +68,11 @@ export class UsuarioService {
   // }
 
    getUsuario() {    
-    console.log('hola getUsuario'+this.usuarioActual)
-    if (!this.usuarioActual) {
-      const data = localStorage.getItem('usuario');
-      this.usuarioActual = data ? JSON.parse(data) : null;
-    }
-    return this.usuarioActual;
+     return this.usuarioActual.value;
   }
 
   getUsuarioId(): number | null {
-    return this.getUsuario()?.userId ?? null;
+    return this.getUsuario().value?.userId ?? null;
   }
 
   getUsuarios(): Observable<any[]> {

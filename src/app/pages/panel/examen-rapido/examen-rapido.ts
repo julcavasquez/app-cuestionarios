@@ -1,8 +1,24 @@
-import { OnInit,Component, signal } from '@angular/core';
+import { OnInit,Component, signal,OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray,FormBuilder, FormsModule,FormGroup, ReactiveFormsModule,Validators } from '@angular/forms';
 import { TemasService } from '../../../services/temas';
 import { PreguntasService } from '../../../services/preguntas';
+import { RouterLink, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+interface Opcion {
+  id_opcion: number;
+  texto_opcion: string;
+  es_correcta: boolean;
+}
+
+interface Pregunta {
+  id_pregunta: number;
+  enunciado_pregunta: string;
+  tipo_pregunta: 'OU' | 'OM';
+  feedback_pregunta: string;
+  opciones: Opcion[];
+}
+
 @Component({
   selector: 'app-examen-rapido',
   standalone: true,
@@ -10,19 +26,30 @@ import { PreguntasService } from '../../../services/preguntas';
   templateUrl: './examen-rapido.html',
   styleUrl: './examen-rapido.scss'
 })
-export class ExamenRapido implements OnInit{
+export class ExamenRapido implements OnInit, OnDestroy{
   configForm!: FormGroup;
   listtemas: any[] = [];
-  maxPreguntas = 15;
+  maxPreguntas = 20;
   examenIniciado: boolean = false;
   resumenSeleccion: any[] = [];
-  preguntas: any[] = []; // simulamos las preguntas cargadas
+  preguntas: Pregunta[] = []; // simulamos las preguntas cargadas
   preguntaIndex = 0;
   letras = ['a','b','c','d','e','f','g','h']; 
+  preguntaActual = 0;
+  seleccionadas: number[] = [];
+  verificado = false;
+  esCorrecto = false;
+   // 🕒 Cronómetro
+  segundos = 0;
+  minutos = 0;
+  minutosStr = '00';
+  segundosStr = '00';
+  timerInterval: any;
    constructor(
     private fb: FormBuilder,
     private temasService: TemasService,
-    private pregutasService : PreguntasService
+    private pregutasService : PreguntasService,
+    private router : Router
   ) {
        
   }
@@ -33,6 +60,30 @@ export class ExamenRapido implements OnInit{
   });
     this.cargarTemas();
     console.log(this.listtemas);
+  }
+
+   ngOnDestroy() {
+    this.detenerTimer();
+  }
+
+  iniciarTimer() {
+    this.timerInterval = setInterval(() => {
+      this.segundos++;
+
+      if (this.segundos >= 60) {
+        this.minutos++;
+        this.segundos = 0;
+      }
+
+      this.minutosStr = this.minutos < 10 ? '0' + this.minutos : this.minutos.toString();
+      this.segundosStr = this.segundos < 10 ? '0' + this.segundos : this.segundos.toString();
+    }, 1000);
+  }
+
+  detenerTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
 
@@ -88,6 +139,7 @@ export class ExamenRapido implements OnInit{
         // Enviar al backend
       this.pregutasService.obtenerPreguntasPorConfig(seleccion).subscribe({
         next: (res) => {
+          this.iniciarTimer();
           this.preguntas = res;
           console.log(res);
           this.preguntaIndex = 0;
@@ -130,15 +182,69 @@ onSliderChange(i: number) {
   }
 } 
 
-  siguientePregunta() {
-    if (this.preguntaIndex < this.preguntas.length - 1) {
-      this.preguntaIndex++;
+  // siguientePregunta() {
+  //   if (this.preguntaIndex < this.preguntas.length - 1) {
+  //     this.preguntaIndex++;
+  //   }
+  // }
+
+  // anteriorPregunta() {
+  //   if (this.preguntaIndex > 0) {
+  //     this.preguntaIndex--;
+  //   }
+  // }
+
+  seleccionarOpcion(id_opcion: number, event: any) {
+    const tipo = this.preguntas[this.preguntaIndex].tipo_pregunta;
+    if (tipo === 'OU') {
+      this.seleccionadas = [id_opcion];
+    } else {
+      if (event.target.checked) {
+        this.seleccionadas.push(id_opcion);
+      } else {
+        this.seleccionadas = this.seleccionadas.filter(id => id !== id_opcion);
+      }
     }
   }
 
-  anteriorPregunta() {
-    if (this.preguntaIndex > 0) {
-      this.preguntaIndex--;
+  verificarRespuesta() {
+    const pregunta = this.preguntas[this.preguntaIndex];
+    const correctas = pregunta.opciones
+                    .filter(o => o.es_correcta)
+                    .map(o => o.id_opcion);
+
+    this.esCorrecto = this.compararArrays(correctas, this.seleccionadas);
+    this.verificado = true;
+  }
+
+  siguientePregunta() {
+    if (this.preguntaIndex < this.preguntas.length - 1) {
+      this.preguntaIndex++;
+      this.seleccionadas = [];
+      this.verificado = false;
+    } else {
+      this.detenerTimer();
+      Swal.fire({
+                  title: '🎯 Examen finalizado',
+                  text: 'Esta evaluación te ha tomado un tiempo de: ' + this.minutos + ":" + this.segundos,
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#3085d6'
+                }).then(() => {
+                  this.router.navigate(['/estudiante/panel']);
+                });
+   
+    }
+  }
+
+  compararArrays(arr1: number[], arr2: number[]): boolean {
+    return arr1.length === arr2.length && arr1.every(a => arr2.includes(a));
+  }
+
+  finalizarExamen() {
+    const confirmar = confirm('¿Deseas finalizar el examen?');
+    if (confirmar) {
+      this.router.navigate(['/estudiante/panel']);
     }
   }
 

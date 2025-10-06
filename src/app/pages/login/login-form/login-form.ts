@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login-form',
   standalone: true,
@@ -12,7 +13,7 @@ import { UsuarioService } from '../../../services/usuario';
   styleUrl: './login-form.scss'
 })
 export class LoginForm {
-    loginForm: FormGroup;
+  loginForm: FormGroup;
   submitted = false;
 
   constructor(private fb: FormBuilder,
@@ -42,14 +43,22 @@ export class LoginForm {
         this.submitted = false;
         // 🚨 Mostrar alerta
         this.usuarioService.loginUsu(res);
-        alert('✅ Login exitoso');
-        if(res.rol == 'admin'){
+           Swal.fire({
+            title: '✅ Login exitoso',
+            text: 'Bienvenido',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3085d6'
+          }).then(() => {
+            if(res.rol == 'admin'){
             this.router.navigate(['/admin/dashboard']);
-        }else{
-          if(res.rol == 'estudiante'){
-             this.router.navigate(['/estudiante/panel']);
-          }
-        }
+            }else{
+              if(res.rol == 'estudiante'){
+                this.router.navigate(['/estudiante/panel']);
+              }
+            }
+          });
+        
         // 👉 Redirigir al home
         //this.router.navigate(['/home']);
       },

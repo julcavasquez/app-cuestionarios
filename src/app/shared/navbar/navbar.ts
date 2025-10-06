@@ -1,9 +1,11 @@
-import { Component,HostListener,signal,OnInit  } from '@angular/core';
+import { Component,HostListener,signal,OnInit,OnDestroy   } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../services/usuario';
 import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -11,15 +13,18 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.scss']
 })
-export class Navbar implements OnInit{
+export class Navbar implements OnInit, OnDestroy{
    usuario: any = null;
+    private sub!: Subscription;
    constructor(public usuarioService: UsuarioService,
     private router: Router
     ) {}
    menuOpen = signal(false);
 
     ngOnInit(): void {
-    this.usuario = this.usuarioService.getUsuario();
+     this.sub = this.usuarioService.usuario$.subscribe(user => {
+      this.usuario = user;
+    });
   }
   toggleMenu() {
     this.menuOpen.update(v => !v);
@@ -35,6 +40,18 @@ export class Navbar implements OnInit{
 
   logout(){
     this.usuarioService.logout();
-    this.router.navigate(['/admin/dashboard']);
+     Swal.fire({
+    title: '👋 Sesión cerrada',
+    text: 'Tu sesión se ha cerrado correctamente.',
+    icon: 'success',
+    confirmButtonText: 'Aceptar',
+    confirmButtonColor: '#3085d6'
+  }).then(() => {
+    this.router.navigate(['/']);
+  });
+  }
+
+   ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

@@ -6,7 +6,7 @@ import { UsuarioService } from '../services/usuario';
 export const noAuthGuard: CanActivateFn = (route, state) => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
-
+ console.log(usuarioService.estaLogueado());
   if (usuarioService.estaLogueado()) {
     // Si es admin, lo mandamos al dashboard
     if (usuarioService.esAdmin()) {

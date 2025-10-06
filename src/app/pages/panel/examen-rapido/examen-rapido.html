@@ -5,7 +5,7 @@
          <h2>Configura tu examen rápido</h2>
     <form *ngIf="configForm" [formGroup]="configForm">
   <div formArrayName="temas">
-    <div class="tema" *ngFor="let tema of listtemas; let i = index"  [formGroupName]="i">
+    <div class="tema-config" *ngFor="let tema of listtemas; let i = index"  [formGroupName]="i">
       <label>
         <input type="checkbox" formControlName="activo" (change)="toggleSlider(i)" />
        {{ temasArray.at(i).get('nom_tema')?.value }}
@@ -42,17 +42,20 @@
   <pre>{{ configForm.getRawValue() | json }}</pre>
   <pre>Valid: {{ configForm.valid }}</pre>
   <pre>Errors: {{ configForm.errors | json }}</pre>  -->
-<button *ngIf="configForm" type="button" class="btn" (click)="empezarExamen()">Empezar</button>
+<button *ngIf="configForm" type="button" class="btn-iniciar" (click)="empezarExamen()">Empezar</button>
     </div>
  <!-- Después de empezar: mostrar resumen -->
-    <div *ngIf="examenIniciado" class="resumen">
+    <div *ngIf="examenIniciado" class="resumen-examen">
       <h4>Resumen de tu configuración:</h4>
       <ul>
         <li *ngFor="let r of resumenSeleccion">
           {{ r.nom_tema }} → {{ r.cantidad }} preguntas
         </li>
       </ul>
-      <p><strong>Total: {{ totalSeleccionadas }}</strong></p>
+      <div class="toral">
+        <p><strong>Total: {{ totalSeleccionadas }}</strong></p>
+      </div>
+        <button class="btn-finalizar" (click)="finalizarExamen()">🚪 Finalizar examen</button>
     </div>
 </div>
   
@@ -65,31 +68,77 @@
     <p class="placeholder-text">⚡ Selecciona temas y cantidad de preguntas para un examen express.</p>
   </div>
    <div *ngIf="examenIniciado" class="preguntas">
-     <p><small>Pregunta {{ preguntaIndex+1 }} de {{ preguntas.length }}</small></p>
-      <h3>{{ preguntas[preguntaIndex]?.enunciado_pregunta }}</h3>
-       <div class="opciones" *ngFor="let o of preguntas[preguntaIndex]?.opciones; let j = index">
+    <!-- Cronómetro -->
+  <div class="timer">
+    ⏰ {{ minutosStr }}:{{ segundosStr }}
+  </div>
+
+     <p><small>Pregunta {{ preguntaIndex+1 }} de {{ preguntas.length }}</small></p>     
+      <h3>{{ preguntas[preguntaIndex].enunciado_pregunta }}</h3>
+       <!-- 🔹 Mensaje según el tipo -->
+  <div class="tipo-msg" 
+       [ngClass]="{'ou':  preguntas[preguntaIndex].tipo_pregunta === 'OU', 'om': preguntas[preguntaIndex].tipo_pregunta === 'OM'}">
+    <small *ngIf="preguntas[preguntaIndex].tipo_pregunta === 'OU'">
+      🔸 Selecciona una sola respuesta
+    </small>
+    <small *ngIf="preguntas[preguntaIndex].tipo_pregunta === 'OM'">
+      🔹 Puedes seleccionar varias opciones
+    </small>
+  </div>
+       <div class="opciones" *ngFor="let o of preguntas[preguntaIndex].opciones; let j = index">
          
         <label class="opcion">
-          <input 
-            type="radio" 
-            *ngIf="preguntas[preguntaIndex]?.tipo_pregunta === 'OU'"
-            name="pregunta{{preguntas[preguntaIndex]?.id_pregunta}}"
+           <input
+            [type]="preguntas[preguntaIndex].tipo_pregunta === 'OU' ? 'radio' : 'checkbox'"
+            [name]="'pregunta' + preguntas[preguntaIndex].id_pregunta"
             [value]="o.id_opcion"
-          />
-          <input 
-            type="checkbox" 
-            *ngIf="preguntas[preguntaIndex]?.tipo_pregunta === 'OM'"
-            [value]="o.id_opcion"
+            (change)="seleccionarOpcion(o.id_opcion, $event)"
+            [disabled]="verificado"
           />
            <span class="letra">{{ letras[j] }}</span>
           <span>{{ o.texto_opcion }}</span>
           </label>
         </div>
-      <div class="controls">
-        <button (click)="anteriorPregunta()" [disabled]="preguntaIndex === 0">Anterior</button>
-        <button (click)="siguientePregunta()" [disabled]="preguntaIndex === preguntas.length - 1">Siguiente</button>
+        <!-- Resultado -->
+    <div class="resultado" *ngIf="verificado">
+      <div
+        class="alerta"
+        [ngClass]="{
+          correcto: esCorrecto,
+          incorrecto: !esCorrecto
+        }"
+      >
+        <strong *ngIf="esCorrecto">🎉 ¡Respuesta correcta!</strong>
+        <strong *ngIf="!esCorrecto">❌ Respuesta incorrecta</strong>
       </div>
 
+      <div class="feedback-card">
+        💡 {{ preguntas[preguntaIndex].feedback_pregunta }}
+      </div>
+    </div>
+      <!-- <div class="controls">
+        <button (click)="anteriorPregunta()" [disabled]="preguntaIndex === 0">Anterior</button>
+        <button (click)="siguientePregunta()" [disabled]="preguntaIndex === preguntas.length - 1">Siguiente</button>
+      </div> -->
+       <!-- Botones -->
+    <div class="botones">
+      <button
+        class="btn verificar"
+        *ngIf="!verificado"
+        (click)="verificarRespuesta()"
+        [disabled]="seleccionadas.length === 0"
+      >
+        Verificar
+      </button>
+
+      <button
+        class="btn siguiente"
+        *ngIf="verificado"
+        (click)="siguientePregunta()"
+      >
+        {{ preguntaIndex < preguntas.length - 1 ? 'Siguiente ➜' : 'Finalizar' }}
+      </button>
+    </div>
     </div>
   </div>
     <!-- <div *ngIf="preguntas.length > 0">
@@ -108,3 +157,16 @@
       </div>
     </div> -->
 </div>
+
+
+<!-- agregue un contador dinámico de respuestas seleccionadas 
+(por ejemplo “Has respondido 3 de 15 preguntas” -->
+
+<!-- cómo guardar las respuestas seleccionadas en un arreglo global 
+(para luego calcular el puntaje total al final del examen)? -->
+
+<!-- ¿Quieres que el botón “Finalizar examen” también muestre una ventana modal personalizada 
+(en lugar de confirm()) con diseño más profesional tipo Bootstrap o Angular Material? -->
+
+<!-- ¿Quieres que el cronómetro tenga un límite de tiempo (por ejemplo, 10 minutos) y 
+al llegar al final termine automáticamente el examen con una alerta visual? -->
