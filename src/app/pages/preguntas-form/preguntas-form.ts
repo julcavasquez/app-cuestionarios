@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CuestionariosService } from '../../services/cuestionarios';
 import { PreguntasService } from '../../services/preguntas';
 import { TemasService } from '../../services/temas';
@@ -22,6 +22,7 @@ constructor(private fb: FormBuilder,
   private route: ActivatedRoute,
   private cuestionarioService: CuestionariosService,
   private temasService: TemasService,
+  private router: Router,
 private preguntasService : PreguntasService) {
     this.preguntaForm = this.fb.group({
       id_tema: ['', Validators.required],
@@ -139,7 +140,7 @@ private preguntasService : PreguntasService) {
     this.preguntasService.guardarPreguntas(payload).subscribe({
       next: (res) => {
         alert('✅ Preguntas guardadas correctamente');
-        console.log(res);
+        this.router.navigate(['admin/cuestionarios']);
       },
       error: (err) => {
         console.error('❌ Error al guardar preguntas', err);

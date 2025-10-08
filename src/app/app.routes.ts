@@ -37,7 +37,7 @@ export const routes: Routes = [
       { path: 'temas', component: Temas },
       { path: 'cuestionarios', component: Cuestionarios },
       { path: 'preguntas/:id', component: ViewPreguntas },
-      { path: 'preguntas/', component: PreguntasForm },
+      { path: 'preguntas', component: PreguntasForm },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
