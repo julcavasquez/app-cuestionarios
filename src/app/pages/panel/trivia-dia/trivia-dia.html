@@ -1,0 +1,50 @@
+<div class="trivia-container">
+  <h2>🎯 Trivia del Día</h2>
+
+  <div class="trivia-card" *ngIf="preguntas">
+    <div class="trivia-header">
+      <h3>{{ preguntas.enunciado_pregunta }}</h3>
+      <div class="timer">
+        ⏰ {{ tiempoRestante }}s
+      </div>
+    </div>
+    <div class="tipo-msg" 
+       [ngClass]="{'ou':  preguntas.tipo_pregunta === 'OU', 'om': preguntas.tipo_pregunta === 'OM'}">
+    <small *ngIf="preguntas.tipo_pregunta === 'OU'">
+      🔸 Selecciona una sola respuesta
+    </small>
+    <small *ngIf="preguntas.tipo_pregunta === 'OM'">
+      🔹 Puedes seleccionar varias opciones
+    </small>
+  </div>
+    <div class="opciones" *ngFor="let o of preguntas.opciones; let j = index">
+       <label class="opcion">
+       <input
+            [type]="preguntas.tipo_pregunta === 'OU' ? 'radio' : 'checkbox'"
+            [name]="'pregunta' + preguntas.id_pregunta"
+            [value]="o.id_opcion"
+            (change)="seleccionarOpcion(o.id_opcion, $event)"
+            [disabled]="verificado"
+          />
+          <span class="letra">{{ letras[j] }}</span>
+        {{ o.texto_opcion }}
+     </label>
+    </div>
+
+    <button class="btn-verificar" (click)="verificarRespuesta()" [disabled]="seleccionadas.length === 0">
+      Verificar
+    </button>
+
+    <div *ngIf="mostrarResultado" class="resultado" [class.correcto]="esCorrecta" [class.incorrecto]="!esCorrecta">
+      <p>
+        {{ esCorrecta ? "✅ ¡Correcto!" : "❌ Incorrecto!" }}
+      </p>
+      <small>{{ preguntas.feedback_pregunta }}</small>
+    </div>
+  </div>
+
+  <div *ngIf="!preguntas" class="no-trivia">
+    <img src="assets/img/cargando.png" alt="Cargando..." />
+    <p>La trivia de hoy aún no está disponible.</p>
+  </div>
+</div>

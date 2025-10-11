@@ -16,6 +16,7 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Descripción</th>
+           <th>Preguntas</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
@@ -25,6 +26,7 @@
             <td>{{ t.id_tema }}</td>
         <td>{{ t.nom_tema }}</td>
         <td [attr.title]="t.descripcion_tema">{{ t.descripcion_tema | slice:0:30 }}{{ t.descripcion_tema.length > 30 ? '...' : '' }}</td>
+        <td>{{ t.total_preguntas }}</td>        
         <td class="text-center">
           <span class="badge" [class.activo]="t.estado_tema" [class.inactivo]="!t.estado_tema">
             {{ t.estado_tema ? 'activo' : 'inactivo' }}

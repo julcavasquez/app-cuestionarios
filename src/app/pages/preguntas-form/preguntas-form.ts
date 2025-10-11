@@ -18,9 +18,9 @@ cuestionariCompleto : any = {};
 cuestionarioId!: number;
  letras = ['a','b','c','d','e','f','g','h']; 
  temas: any[] = [];
+ btnGuardarBD = false;
 constructor(private fb: FormBuilder,
   private route: ActivatedRoute,
-  private cuestionarioService: CuestionariosService,
   private temasService: TemasService,
   private router: Router,
 private preguntasService : PreguntasService) {
@@ -136,11 +136,12 @@ private preguntasService : PreguntasService) {
     };
 
     console.log(payload);
-
+    this.btnGuardarBD = true;
     this.preguntasService.guardarPreguntas(payload).subscribe({
       next: (res) => {
         alert('✅ Preguntas guardadas correctamente');
         this.router.navigate(['admin/cuestionarios']);
+        this.btnGuardarBD = false;
       },
       error: (err) => {
         console.error('❌ Error al guardar preguntas', err);
@@ -152,4 +153,6 @@ private preguntasService : PreguntasService) {
     console.log(id);
     return this.temas.find(t => t.id_tema === Number(id))?.nom_tema || 'No encontrado';
   }
+
+  
 }

@@ -1,9 +1,9 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter,withInMemoryScrolling  } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient,withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app/app';
 import { routes } from './app/app.routes';
-
+import { authInterceptor } from './app/auth-interceptor';
 bootstrapApplication(AppComponent, {
   providers: [provideRouter(
       routes,
@@ -12,5 +12,5 @@ bootstrapApplication(AppComponent, {
         anchorScrolling: 'enabled'            // activa scroll a #secciones
       })
     ),
-  provideHttpClient()]
+  provideHttpClient(withInterceptors([authInterceptor]))]
 }).catch(err => console.error(err));

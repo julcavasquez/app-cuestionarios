@@ -19,7 +19,7 @@ page = 1; // 📌 Página inicial
   constructor(private temaService: TemasService) {}
    mostrarModal = false;
   ngOnInit() {
-    this.temaService.getTemas().subscribe(data => {
+    this.temaService.getTemasCantidad().subscribe(data => {
       this.temas = data;
     });
   }

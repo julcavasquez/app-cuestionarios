@@ -17,12 +17,14 @@
             name="pregunta{{pregunta.id_pregunta}}"
             [value]="o.id_opcion"
             [checked]="o.es_correcta"
+             [disabled]="true"
           />
           <input 
             type="checkbox" 
             *ngIf="pregunta.tipo_pregunta === 'OM'"
             [value]="o.id_opcion"
             [checked]="o.es_correcta"
+             [disabled]="true"
           />
            <span class="letra">{{ letras[j] }}</span>
           <span>{{ o.texto_opcion }}</span>

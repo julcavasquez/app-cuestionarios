@@ -37,7 +37,7 @@
         </td>
         <td>
           <button class="btn editar">Editar</button>
-          <button class="btn eliminar">Eliminar</button>
+          <button class="btn eliminar" (click)="eliminar(c.id_pregunta)">Eliminar</button>
           <button [routerLink]="['/admin/preguntas', c.id_pregunta]" class="btn success">Preguntas</button>
         </td>
       </tr>

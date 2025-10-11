@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 export interface Usuario {
   id: number;
+  token: string;
   nombres: string;
   email: string;
   rol: 'admin' | 'profesor' | 'estudiante';
@@ -32,7 +33,8 @@ export class UsuarioService {
 
   // Simula login
   loginUsu(usuario:any) {
-  localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('token', JSON.stringify(usuario.token));
     this.usuarioActual.next(usuario);
   }
 

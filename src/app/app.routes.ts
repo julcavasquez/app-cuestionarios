@@ -16,6 +16,8 @@ import { PreguntasForm } from './pages/preguntas-form/preguntas-form';
 import { ViewPreguntas } from './pages/preguntas-form/view-preguntas/view-preguntas';
 import { Panel } from './pages/panel/panel';
 import { ExamenRapido } from './pages/panel/examen-rapido/examen-rapido';
+import { TriviaDia } from './pages/panel/trivia-dia/trivia-dia';
+
 export const routes: Routes = [
    {
     path: '',
@@ -48,6 +50,7 @@ export const routes: Routes = [
     children: [
       { path: 'panel', component: Panel },
       { path: 'examen-rapido', component: ExamenRapido },
+      { path: 'trivia-dia', component: TriviaDia },
       { path: '', redirectTo: 'panel', pathMatch: 'full' }
     ]
   },

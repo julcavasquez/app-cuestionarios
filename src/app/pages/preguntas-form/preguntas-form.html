@@ -107,7 +107,7 @@
       </div>
       <button type="button" class="btn-eliminar" (click)="eliminarPregunta(i)">🗑 Eliminar</button>
     </div>
-  <button type="button" class="btn success save-btn" (click)="guardarPreguntasBD()">
+  <button type="button" class="btn success save-btn" (click)="guardarPreguntasBD()" [disabled]="btnGuardarBD">
     💾 Guardar Cuestionario
   </button>
   </div> 

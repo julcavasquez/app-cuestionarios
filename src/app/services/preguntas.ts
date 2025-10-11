@@ -8,6 +8,10 @@ export class PreguntasService {
 
   constructor(private http: HttpClient) {}
 
+  eliminarPregunta(id: number) {
+  return this.http.put<any>(`${this.apiUrl}/eliminar/${id}`, {});
+}
+
   guardarPreguntas(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, payload);
   }
