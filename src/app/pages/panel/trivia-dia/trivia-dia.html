@@ -1,14 +1,13 @@
-<div class="trivia-container">
-  <h2>🎯 Trivia del Día</h2>
-
-  <div class="trivia-card" *ngIf="preguntas">
-    <div class="trivia-header">
+  <div class="trivia-container">
+      <div class="card panel-examen">
+     <h2>🎯 Trivia del Día</h2>
+    <!-- Cronómetro -->
+  <div class="timer">
+    ⏰ {{ tiempoRestante }}s
+  </div>
       <h3>{{ preguntas.enunciado_pregunta }}</h3>
-      <div class="timer">
-        ⏰ {{ tiempoRestante }}s
-      </div>
-    </div>
-    <div class="tipo-msg" 
+       <!-- 🔹 Mensaje según el tipo -->
+  <div class="tipo-msg" 
        [ngClass]="{'ou':  preguntas.tipo_pregunta === 'OU', 'om': preguntas.tipo_pregunta === 'OM'}">
     <small *ngIf="preguntas.tipo_pregunta === 'OU'">
       🔸 Selecciona una sola respuesta
@@ -17,7 +16,7 @@
       🔹 Puedes seleccionar varias opciones
     </small>
   </div>
-    <div class="opciones" *ngFor="let o of preguntas.opciones; let j = index">
+       <div class="opciones" *ngFor="let o of preguntas.opciones; let j = index">
        <label class="opcion">
        <input
             [type]="preguntas.tipo_pregunta === 'OU' ? 'radio' : 'checkbox'"
@@ -30,9 +29,9 @@
         {{ o.texto_opcion }}
      </label>
     </div>
-
-     <!-- Resultado -->
-    <div class="resultado" *ngIf="mostrarResultado">
+        <!-- Resultado -->
+   
+       <div class="resultado" *ngIf="mostrarResultado">
       <div
         class="alerta"
         [ngClass]="{
@@ -54,12 +53,10 @@
       Verificar
     </button>
     </div>
-
-    
-  </div>
-
-  <div *ngIf="!preguntas" class="no-trivia">
+    <div *ngIf="!preguntas" class="no-trivia">
     <img src="assets/img/cargando.png" alt="Cargando..." />
     <p>La trivia de hoy aún no está disponible.</p>
   </div>
-</div>
+  </div>
+  </div>
+  
