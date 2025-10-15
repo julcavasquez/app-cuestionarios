@@ -9,6 +9,7 @@ interface Opcion {
   id_opcion: number;
   texto_opcion: string;
   es_correcta: boolean;
+  mostrarCorrecta : boolean;
 }
 
 interface Pregunta {
@@ -215,6 +216,14 @@ onSliderChange(i: number) {
 
     this.esCorrecto = this.compararArrays(correctas, this.seleccionadas);
     this.verificado = true;
+
+     // Si es incorrecto, marcar visualmente las correctas
+      if (!this.esCorrecto) {
+        pregunta.opciones = pregunta.opciones.map(op => ({
+          ...op,
+          mostrarCorrecta: op.es_correcta // marcar para resaltar en amarillo
+        }));
+      }
   }
 
   siguientePregunta() {

@@ -87,7 +87,10 @@
   </div>
        <div class="opciones" *ngFor="let o of preguntas[preguntaIndex].opciones; let j = index">
          
-        <label class="opcion">
+        <label class="opcion"
+        [ngClass]="{
+        'seleccionada': seleccionadas.includes(o.id_opcion)
+          }">
            <input
             [type]="preguntas[preguntaIndex].tipo_pregunta === 'OU' ? 'radio' : 'checkbox'"
             [name]="'pregunta' + preguntas[preguntaIndex].id_pregunta"
@@ -97,6 +100,12 @@
           />
            <span class="letra">{{ letras[j] }}</span>
           <span>{{ o.texto_opcion }}</span>
+          <!-- Badge de respuesta correcta -->
+          <span 
+            *ngIf="verificado && o.mostrarCorrecta" 
+            class="badge-correcta">
+            ✔ Correcta
+          </span>
           </label>
         </div>
         <!-- Resultado -->

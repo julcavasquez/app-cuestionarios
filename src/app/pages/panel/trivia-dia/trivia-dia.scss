@@ -14,8 +14,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
   width: 100%;
-  max-width: 500px;
-  text-align: center;
+  max-width: 900px;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -60,6 +59,11 @@
     color: #fff;
     font-weight: bold;
   }
+}
+
+.botones {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .btn-verificar {
@@ -207,3 +211,29 @@
   color: #28a745;
 }
 
+.alerta {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alerta.correcto {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alerta.incorrecto {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.feedback-card {
+  background: #fff8e1;
+  border-left: 4px solid #ffc107;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: #5f4405;
+}

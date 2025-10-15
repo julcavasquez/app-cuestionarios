@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TriviaService } from '../../../services/trivias';
-
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 interface Opcion {
   id_opcion: number;
   texto_opcion: string;
@@ -32,7 +33,8 @@ export class TriviaDia implements OnInit{
   verificado = false;
   constructor(
     private fb: FormBuilder,
-    private triviaService : TriviaService
+    private triviaService : TriviaService,
+    private router : Router
   ) {
        
   }
@@ -49,13 +51,34 @@ export class TriviaDia implements OnInit{
     this.cargarTrivia();
   }
 
+   ngOnDestroy() {
+    this.detenerTimer();
+  }
+
+
+  detenerTimer() {
+    if (this.temporizador) {
+      clearInterval(this.temporizador);
+    }
+  }
+
   iniciarTemporizador() {
     this.temporizador = setInterval(() => {
       if (this.tiempoRestante > 0) {
         this.tiempoRestante--;
       } else {
         clearInterval(this.temporizador);
-        this.mostrarResultado = true;
+        Swal.fire({
+                    title: '🚨 El Tiempo a concluido',
+                    text: 'No pudiste responder la trivia, vuelve a intentarlo.',
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#3085d6'
+                  }).then(() => {
+                    this.router.navigate(['/estudiante/panel']);;
+                     
+                  });
+        
       }
     }, 1000);
   }

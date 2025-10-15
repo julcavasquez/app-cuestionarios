@@ -364,3 +364,28 @@
   font-size: 1.1rem;
   letter-spacing: 1px;
 }
+
+
+/* ✅ opción seleccionada por el usuario */
+.opcion.seleccionada {
+  background-color: #d6eaff;
+  border-color: #2186ff;
+}
+
+/* 💛 opción correcta (cuando se muestra tras error) */
+.opcion.correcta {
+  background-color: #00ff00;
+  border-color: #00ff62;
+  font-weight: bold;
+}
+
+/* 🎯 badge de correcta */
+.badge-correcta {
+  background-color: #ffce00;
+  color: #000;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+}

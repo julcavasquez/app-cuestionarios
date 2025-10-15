@@ -31,16 +31,31 @@
      </label>
     </div>
 
-    <button class="btn-verificar" (click)="verificarRespuesta()" [disabled]="seleccionadas.length === 0">
+     <!-- Resultado -->
+    <div class="resultado" *ngIf="mostrarResultado">
+      <div
+        class="alerta"
+        [ngClass]="{
+          correcto: esCorrecta,
+          incorrecto: !esCorrecta
+        }"
+      >
+        <strong *ngIf="esCorrecta">🎉 ¡Respuesta correcta!</strong>
+        <strong *ngIf="!esCorrecta">❌ Respuesta incorrecta</strong>
+      </div>
+
+      <div class="feedback-card">
+        💡 {{ preguntas.feedback_pregunta }}
+      </div>
+    </div>
+
+    <div class="botones">
+      <button class="btn-verificar" (click)="verificarRespuesta()" [disabled]="seleccionadas.length === 0">
       Verificar
     </button>
-
-    <div *ngIf="mostrarResultado" class="resultado" [class.correcto]="esCorrecta" [class.incorrecto]="!esCorrecta">
-      <p>
-        {{ esCorrecta ? "✅ ¡Correcto!" : "❌ Incorrecto!" }}
-      </p>
-      <small>{{ preguntas.feedback_pregunta }}</small>
     </div>
+
+    
   </div>
 
   <div *ngIf="!preguntas" class="no-trivia">
