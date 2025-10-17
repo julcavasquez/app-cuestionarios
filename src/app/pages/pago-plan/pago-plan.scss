@@ -1,0 +1,145 @@
+.pago-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  background: #f9fafc;
+  font-family: 'Lato', sans-serif;
+}
+
+/* Panel izquierdo */
+.pago-resumen {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  width: 350px;
+}
+
+.pago-resumen h2 {
+  color: #2186ff;
+  font-family: 'Raleway', sans-serif;
+}
+
+.precio {
+  margin: 15px 0;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 10px;
+}
+
+.precio-descuento {
+  color: #2186ff;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.descuento {
+  background: #00b894;
+  color: white;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+.beneficios {
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Panel derecho */
+.pago-detalle {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  width: 400px;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.metodos-pago {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.metodos-pago h4 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.metodos-pago .icons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.metodos-pago img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 6px;
+  background: #f8f8f8;
+}
+
+/* Botón asesor */
+.btn-asesor {
+  width: 100%;
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-asesor:hover {
+  background: #1ebc5b;
+}
+
+input[type="email"] {
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .pago-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pago-resumen,
+  .pago-detalle {
+    width: 90%;
+  }
+}

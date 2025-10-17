@@ -1,7 +1,7 @@
 .navbar-user {
   display: flex;
   justify-content: space-between;
-  background: #2186FF;
+  background: #031027;
   padding: 10px 10px;
   color: white;
   position: fixed;   /* 👈 se queda fijo */
@@ -10,11 +10,16 @@
   width: 100%;
   z-index: 1000;     /* 👈 asegura que quede por encima de todo */
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+ .logo img {
+  height: 50px;
+  width: 80px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
 
+.logo img:hover {
+  transform: scale(1.05);
+}
   .hamburger {
     display: none;
     font-size: 1.8rem;

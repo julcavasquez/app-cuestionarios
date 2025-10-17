@@ -13,7 +13,6 @@
     <img src="assets/img/inicio.png" alt="Portada Quizify">
   </div>
 </div>
-
 <!-- ✅ Sección de Beneficios -->
 <div id="beneficios" class="benefits-section">
   <h2>Beneficios</h2>
@@ -38,3 +37,67 @@
     </div>
   </div>
 </div>
+
+<!-- ✅ Seccion de Planes -->
+<div id="planes" class="planes-section">
+  <h2 class="titulo-seccion">Nuestros Planes</h2>
+
+  <div class="planes-container">
+    <!-- 🩵 Plan Básico -->
+    <div class="plan-card">
+      <h3 class="plan-nombre">Plan Básico</h3>
+      <div class="precio">
+        <span class="precio-original">S/ 40</span>
+        <span class="precio-promocion">S/ 32</span>
+        <span class="descuento">20% OFF</span>
+      </div>
+      <ul class="beneficios">
+        <li>✅ Acceso ilimitado por <strong>1 mes</strong></li>
+        <li>✅ Exámenes ilimitados con preguntas aleatorias</li>
+        <li>✅ Feedback instantáneo en cada pregunta</li>
+        <li>✅ Simulador de examen con puntaje final</li>
+      </ul>
+      <button class="btn-comprar" *ngIf="!usuario" [routerLink]="['/planes/pago', 1]">Elegir Plan</button>
+      <button class="btn-comprar" *ngIf="usuario" [routerLink]="['/estudiante/planes/pago', 1]">Elegir Plan</button>
+    </div>
+
+    <!-- 💠 Plan Estándar (Más Popular) -->
+    <div class="plan-card destacado">
+      <div class="badge-popular">⭐ Más Popular</div>
+      <h3 class="plan-nombre">Plan Estándar</h3>
+      <div class="precio">
+        <span class="precio-original">S/ 60</span>
+        <span class="precio-promocion">S/ 48</span>
+        <span class="descuento">20% OFF</span>
+      </div>
+      <ul class="beneficios">
+        <li>✅ Acceso ilimitado por <strong>2 meses</strong></li>
+        <li>✅ Exámenes ilimitados con preguntas aleatorias</li>
+        <li>✅ Feedback instantáneo en cada pregunta</li>
+        <li>✅ Simulador de examen con puntaje final</li>
+      </ul>
+      <button class="btn-comprar destacado-btn" *ngIf="!usuario" [routerLink]="['/planes/pago', 2]">Elegir Plan</button>
+      <button class="btn-comprar destacado-btn" *ngIf="usuario" [routerLink]="['/estudiante/planes/pago', 2]">Elegir Plan</button>
+    </div>
+
+    <!-- 💛 Plan Premium -->
+    <div class="plan-card premium">
+      <h3 class="plan-nombre">Plan Premium</h3>
+      <div class="precio">
+        <span class="precio-original">S/ 80</span>
+        <span class="precio-promocion">S/ 64</span>
+        <span class="descuento">20% OFF</span>
+      </div>
+      <ul class="beneficios">
+        <li>✅ Acceso ilimitado por <strong>3 meses</strong></li>
+        <li>✅ Exámenes ilimitados con preguntas aleatorias</li>
+        <li>✅ Feedback instantáneo en cada pregunta</li>
+        <li>✅ Simulador de examen con puntaje final</li>
+      </ul>
+      <button class="btn-comprar premium-btn" *ngIf="!usuario" [routerLink]="['/planes/pago', 3]">Elegir Plan</button>
+      <button class="btn-comprar premium-btn" *ngIf="usuario" [routerLink]="['/estudiante/planes/pago', 3]">Elegir Plan</button>
+    </div>
+  </div>
+</div>
+
+

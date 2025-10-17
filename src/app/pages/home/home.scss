@@ -58,7 +58,7 @@
 .benefits-section {
   margin: 4rem auto;
   max-width: 1200px;
-  padding: 0 1rem;
+  padding: 80px 20px;
   text-align: center;
 
   h2 {
@@ -126,5 +126,153 @@
 @media (max-width: 768px) {
   .benefits {
     grid-template-columns: 1fr;
+  }
+}
+
+.planes-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9fafc;
+  font-family: 'Lato', sans-serif;
+}
+
+.titulo-seccion {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #1a1a1a;
+  font-family: 'Raleway', sans-serif;
+}
+
+.planes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.plan-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  width: 300px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(33, 134, 255, 0.2);
+}
+
+/* 🏷️ Badge “Más Popular” */
+.badge-popular {
+  position: absolute;
+  top: 15px;
+  right: -40px;
+  background: linear-gradient(90deg, #2186ff, #4ac7ff);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 6px 50px;
+  transform: rotate(45deg);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.plan-nombre {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2186ff;
+  margin-bottom: 10px;
+}
+
+.precio {
+  margin-bottom: 20px;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 8px;
+}
+
+.precio-promocion {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2186ff;
+}
+
+.descuento {
+  display: block;
+  font-size: 0.9rem;
+  color: #00b894;
+  margin-top: 4px;
+}
+
+.beneficios {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.beneficios li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.btn-comprar {
+  background: #2186ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-comprar:hover {
+  background: #176dd9;
+}
+
+/* 💠 Plan destacado */
+.destacado {
+  border: 2px solid #2186ff;
+  transform: scale(1.05);
+}
+
+.destacado-btn {
+  background: #176dd9;
+}
+
+/* 💛 Plan premium */
+.premium-btn {
+  background: #ffb400;
+  color: #000;
+}
+
+.premium-btn:hover {
+  background: #ff9f00;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .planes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .plan-card {
+    width: 90%;
+  }
+
+  .badge-popular {
+    top: 10px;
+    right: -35px;
+    font-size: 0.8rem;
+    padding: 4px 40px;
   }
 }

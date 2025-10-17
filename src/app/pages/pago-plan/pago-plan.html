@@ -1,0 +1,44 @@
+<section class="pago-container" *ngIf="planSeleccionado">
+  <!-- 🧾 Panel Izquierdo: Resumen del Plan -->
+  <div class="pago-resumen">
+    <h2>{{ planSeleccionado.nombre }}</h2>
+    <p class="precio">
+      <span class="precio-original">S/ {{ planSeleccionado.precio }}</span>
+      <span class="precio-descuento">
+        S/ {{ getPrecioConDescuento(planSeleccionado.precio, planSeleccionado.descuento) }}
+      </span>
+      <span class="descuento">{{ planSeleccionado.descuento }}% OFF</span>
+    </p>
+
+    <p><strong>Duración:</strong> {{ planSeleccionado.duracion }}</p>
+
+    <ul class="beneficios">
+      <li *ngFor="let b of planSeleccionado.beneficios">✅ {{ b }}</li>
+    </ul>
+  </div>
+
+  <!-- 💳 Panel Derecho: Métodos de pago -->
+  <div class="pago-detalle">
+    <h3>Forma de Activar tu Plan</h3>
+
+    <div class="form-section">
+      <label for="email">Debes ingresar el correo que te registraste:</label>
+      <input type="email" id="email" [(ngModel)]="correoUsuario" placeholder="ejemplo@correo.com" />
+    </div>
+
+    <div class="metodos-pago">
+      <h4>Metodos de Pago Preferidos:</h4>
+      <div class="icons">
+        <img src="assets/img/yape.png" alt="Yape" />
+        <img src="assets/img/plin.jpg" alt="Plin" />
+        <!-- <img src="assets/img/pagoefectivo.png" alt="PagoEfectivo" />
+        <img src="assets/img/bim.png" alt="Bim" /> -->
+        <img src="assets/img/depositocta.png" alt="Depósito" />
+      </div>
+    </div>
+
+    <button class="btn-asesor" (click)="contactarAsesor()">
+      💬 Contactar a un asesor
+    </button>
+  </div>
+</section>

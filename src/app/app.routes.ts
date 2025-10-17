@@ -17,7 +17,7 @@ import { ViewPreguntas } from './pages/preguntas-form/view-preguntas/view-pregun
 import { Panel } from './pages/panel/panel';
 import { ExamenRapido } from './pages/panel/examen-rapido/examen-rapido';
 import { TriviaDia } from './pages/panel/trivia-dia/trivia-dia';
-
+import { PagoPlan } from './pages/pago-plan/pago-plan';
 export const routes: Routes = [
    {
     path: '',
@@ -26,6 +26,7 @@ export const routes: Routes = [
       { path: 'home', component: Home },
       { path: 'register', component: Register,canActivate: [noAuthGuard] },
       { path: 'login', component: LoginForm,canActivate: [noAuthGuard] },
+      { path: 'planes/pago/:id', component: PagoPlan,canActivate: [noAuthGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
@@ -51,6 +52,7 @@ export const routes: Routes = [
       { path: 'panel', component: Panel },
       { path: 'examen-rapido', component: ExamenRapido },
       { path: 'trivia-dia', component: TriviaDia },
+      { path: 'planes/pago/:id', component: PagoPlan },
       { path: '', redirectTo: 'panel', pathMatch: 'full' }
     ]
   },

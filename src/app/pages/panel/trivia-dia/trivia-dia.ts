@@ -16,7 +16,7 @@ interface Pregunta {
   tipo_pregunta: 'OU' | 'OM';
   feedback_pregunta: string;
   opciones: Opcion[];
-}
+} 
 
 
 @Component({
@@ -27,7 +27,14 @@ interface Pregunta {
   styleUrl: './trivia-dia.scss'
 })
 export class TriviaDia implements OnInit{
-  preguntas!: Pregunta; // simulamos las preguntas cargadas
+  preguntas: Pregunta = {
+  id_pregunta: 0,
+  enunciado_pregunta: '',
+  tipo_pregunta: 'OU',
+  feedback_pregunta: '',
+  opciones: []
+};
+  mensaje: number = 0;
   letras = ['a','b','c','d','e','f','g','h']; 
   seleccionadas: number[] = [];
   verificado = false;
@@ -114,10 +121,15 @@ export class TriviaDia implements OnInit{
 
     cargarTrivia() {
     this.triviaService.getTriviaDelDia().subscribe({
-      next: (res) => {
-        this.preguntas = res;
-         console.log(this.preguntas);
-      
+      next: (res : any) => {
+         if (res.message) {
+          console.log(res.message);
+          this.mensaje = 1; 
+          // 👈 Mostramos el mensaje
+    } else {
+      this.preguntas = res;
+    }
+             
         
       },
       error: (err) => console.error(err),

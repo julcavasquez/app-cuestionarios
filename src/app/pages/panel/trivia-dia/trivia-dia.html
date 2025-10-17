@@ -1,5 +1,9 @@
   <div class="trivia-container">
-      <div class="card panel-examen">
+     <div *ngIf="mensaje == 1" class="no-trivia">
+    <img src="assets/img/cargando.png" alt="Cargando..." />
+    <p>La trivia de hoy aún no está disponible.</p>
+  </div>
+  <div *ngIf="mensaje == 0"  class="card panel-examen">
      <h2>🎯 Trivia del Día</h2>
     <!-- Cronómetro -->
   <div class="timer">
@@ -53,10 +57,11 @@
       Verificar
     </button>
     </div>
-    <div *ngIf="!preguntas" class="no-trivia">
-    <img src="assets/img/cargando.png" alt="Cargando..." />
-    <p>La trivia de hoy aún no está disponible.</p>
+   
   </div>
+
+ 
   </div>
-  </div>
+
+   
   
