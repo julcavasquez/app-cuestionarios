@@ -1,69 +1,26 @@
-.opciones {
-  margin-top: 15px;
+.edit-opcion-full {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  width: 100%;
 }
 
-/* Contenedor de cada opción */
-.opcion {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.edit-textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
   font-size: 1rem;
-  user-select: none;
+  line-height: 1.5;
+  background: #fff;
 }
 
-/* Hover */
-.opcion:hover {
-  border-color: #2186ff;
-  background: #f5f9ff;
-}
-
-/* Ocultar inputs nativos */
-.opcion input[type="radio"],
-.opcion input[type="checkbox"] {
-  display: none;
-}
-
-/* Círculo con la letra (A, B, C, D) */
-.opcion .letra {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #ddd;
-  color: #333;
+.opt-buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  justify-content: flex-start;
+  gap: 8px;
 }
-
-/* Texto de la opción */
-.opcion .texto {
-  flex: 1;
-}
-
-/* ✅ Cuando está seleccionado */
-.opcion input[type="radio"]:checked ~ .letra,
-.opcion input[type="checkbox"]:checked ~ .letra {
-  background: #2186ff;
-  color: white;
-}
-
-.opcion input[type="radio"]:checked ~ .texto,
-.opcion input[type="checkbox"]:checked ~ .texto {
-  color: #2186ff;
-  font-weight: bold;
-}
-
 
 .feedback-card {
   display: flex;
@@ -155,4 +112,44 @@ textarea {
 
 .grupo-guardar{
   margin-top: 10px;
+}
+
+.opciones-lista {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.opcion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px 0;
+  padding: 6px 8px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.badge-correcta {
+  background: #28a745;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+
+
+.anim-guardado {
+  animation: guardadoFlash 3s ease !important;
+}
+
+@keyframes guardadoFlash {
+  10% {
+    background-color: #31e903; /* verde claro */
+  }
+  100% {
+    background-color: #31e903;
+  }
 }

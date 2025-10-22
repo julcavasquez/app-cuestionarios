@@ -29,4 +29,8 @@ export class PreguntasService {
     enunciado_pregunta: nuevoEnunciado
   });
 }
+
+actualizarOpcion(id_opcion: number, data: { texto_opcion: string }) {
+  return this.http.put(`${this.apiUrl}/editaropcion/${id_opcion}`, data);
+}
 }

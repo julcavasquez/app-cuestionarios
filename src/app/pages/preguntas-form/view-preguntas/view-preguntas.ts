@@ -97,5 +97,52 @@ export class ViewPreguntas implements OnInit{
   
   }
 
+   editarOpcion(o: any) {
+    o.textoTemporal = o.texto_opcion;
+    o.editando = true;
+  }
+
+  cancelarEdicionOpcion(o : any) {
+    o.editando = false;
+  }
+
+  guardarOpcion(o: any) {
+    if (!o.textoTemporal.trim()) return;
+  Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción editara el enunciado de la opción',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, editar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+        confirmButtonColor: 'rgba(18, 141, 7, 1)',
+        cancelButtonColor: '#e41212ff'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.preguntasService.actualizarOpcion(o.id_opcion, {
+      texto_opcion: o.textoTemporal
+    }).subscribe({
+      next: () => {
+        o.texto_opcion = o.textoTemporal;
+        o.editando = false;
+        Swal.fire({
+          icon: 'success',
+          title: 'Opción actualizada',
+          text: 'Se guardaron los cambios correctamente ✅',
+          timer: 1200,
+          showConfirmButton: false
+        });
+        // Efecto visual de guardado
+        o.guardado = true;
+        setTimeout(() => (o.guardado = false), 3000); // Dura 1 segundo
+      },
+      error: () => Swal.fire('Error', 'No se pudo actualizar la opción.', 'error')
+    });
+        }
+      });
+    
+  }
+
   
 }

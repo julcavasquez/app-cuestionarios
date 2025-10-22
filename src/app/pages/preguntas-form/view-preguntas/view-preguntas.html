@@ -26,36 +26,40 @@
     </button>
          </div>
   
-    <div class="opciones">
-      <div *ngFor="let o of opciones; let j = index">       
-        <label class="opcion">
-          <input 
-            type="radio" 
-            *ngIf="pregunta.tipo_pregunta === 'OU'"
-            name="pregunta{{pregunta.id_pregunta}}"
-            [value]="o.id_opcion"
-            [checked]="o.es_correcta"
-             [disabled]="true"
-          />
-          <input 
-            type="checkbox" 
-            *ngIf="pregunta.tipo_pregunta === 'OM'"
-            [value]="o.id_opcion"
-            [checked]="o.es_correcta"
-             [disabled]="true"
-          />
-           <span class="letra">{{ letras[j] }}</span>
-          <span>{{ o.texto_opcion }}</span>
-        </label>
-      </div>
-    </div>
+    <ul class="opciones-lista">
+    <li *ngFor="let o of opciones; let i = index"
+    [ngClass]="{ 'anim-guardado': o.guardado }">
+      <div class="opcion-item">
+        <!-- Vista normal -->
+        <span *ngIf="!o.editando">
+          {{ letras[i] }}. {{ o.texto_opcion }}
+          <span *ngIf="o.es_correcta" class="badge-correcta">✔ Correcta</span>
+        </span>
 
-    <div class="feedback-card" *ngIf="pregunta.feedback_pregunta">
-  <div class="feedback-icon">💡</div>
-  <div class="feedback-text">
-    {{ pregunta.feedback_pregunta }}
+        <!-- Vista edición -->
+        <div *ngIf="o.editando" class="edit-opcion-full">
+          <textarea
+            type="text"
+            [(ngModel)]="o.textoTemporal"
+            class="edit-textarea"
+          ></textarea>
+          <div class="opt-buttons">
+          <button class="btn-guardar" (click)="guardarOpcion(o)">Guardar 💾</button>
+          <button class="btn-cancelar" (click)="cancelarEdicionOpcion(o)">Cancelar ✖</button>
+        </div>
+        </div>
+
+        <!-- Botón editar -->
+        <button *ngIf="!o.editando" class="btn-editar" (click)="editarOpcion(o)">✏️</button>
+      </div>
+    </li>
+  </ul>
+  <div class="feedback-card" *ngIf="pregunta.feedback_pregunta">
+      <div class="feedback-icon">💡</div>
+      <div class="feedback-text">
+        {{ pregunta.feedback_pregunta }}
+      </div>
   </div>
-</div>
   </div>
    </div>
 
