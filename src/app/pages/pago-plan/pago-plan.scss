@@ -4,7 +4,6 @@
   justify-content: center;
   gap: 30px;
   padding: 40px;
-  background: #f9fafc;
   font-family: 'Lato', sans-serif;
 }
 
@@ -136,10 +135,31 @@ input[type="email"] {
   .pago-container {
     flex-direction: column;
     align-items: center;
+    padding: 15px;
   }
 
   .pago-resumen,
   .pago-detalle {
-    width: 90%;
+    width: 100%;
   }
+}
+
+
+.volver-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.btn-volver {
+  display: inline-block;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.btn-volver:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }

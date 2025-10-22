@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Plan, PlanesService  } from '../../services/planes';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-pago-plan',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './pago-plan.html',
   styleUrl: './pago-plan.scss'
 })
@@ -14,50 +15,17 @@ export class PagoPlan implements OnInit {
   planId!: number;
   planSeleccionado: any;
   correoUsuario: string = '';
+  planes: Plan[] = [];
 
-  planes = [
-    {
-      id: 1,
-      nombre: 'Plan Básico',
-      precio: 40,
-      descuento: 20,
-      duracion: '1 mes',
-      beneficios: [
-        'Acceso ilimitado',
-        'Exámenes aleatorios',
-        'Feedback inmediato',
-        'Simulador con puntaje final'
-      ]
-    },
-    {
-      id: 2,
-      nombre: 'Plan Estándar',
-      precio: 60,
-      descuento: 20,
-      duracion: '2 meses',
-      beneficios: [
-        'Todo lo del Plan Básico',
-        'Mayor duración y soporte prioritario'
-      ]
-    },
-    {
-      id: 3,
-      nombre: 'Plan Premium',
-      precio: 80,
-      descuento: 20,
-      duracion: '3 meses',
-      beneficios: [
-        'Todo lo del Plan Estándar',
-        'Acceso anticipado a nuevas funciones'
-      ]
-    }
-  ];
+ 
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+    private planesService: PlanesService
+  ) {}
 
   ngOnInit() {
     this.planId = Number(this.route.snapshot.paramMap.get('id'));
-    this.planSeleccionado = this.planes.find(p => p.id === this.planId);
+    this.planSeleccionado = this.planesService.getPlanById(this.planId);
   }
 
   getPrecioConDescuento(precio: number, descuento: number): number {

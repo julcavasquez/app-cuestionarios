@@ -6,8 +6,26 @@
 
    <div class="cuestionario">
        <div class="pregunta-card">
-    <h3>{{ pregunta.enunciado_pregunta }}</h3>
+         <div class="pregunta-header">
+            <h3 *ngIf="!editando">{{ pregunta.enunciado_pregunta }}</h3>
+        <div *ngIf="editando" class="edit-mode">
+      <textarea
+        type=""
+        [(ngModel)]="nuevoEnunciado"
+        placeholder="Editar enunciado..."
+        class="edit-input"
+      ></textarea>
+      <div class="grupo-guardar">
+        <button class="btn-guardar" (click)="guardarCambios()">💾 Guardar</button>
+        <button class="btn-cancelar" (click)="cancelarEdicion()">✖ Cancelar</button>
+      </div>
+    </div>
 
+    <button *ngIf="!editando" class="btn-editar" (click)="editarPregunta()">
+      ✏️ Editar
+    </button>
+         </div>
+  
     <div class="opciones">
       <div *ngFor="let o of opciones; let j = index">       
         <label class="opcion">

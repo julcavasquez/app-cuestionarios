@@ -23,4 +23,10 @@ export class PreguntasService {
    obtenerPreguntasPorConfig(payload: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/configuracion`, payload);
   }
+
+  actualizarEnunciado(id_pregunta: number, nuevoEnunciado: string) {
+  return this.http.put(`${this.apiUrl}/editar/${id_pregunta}`, {
+    enunciado_pregunta: nuevoEnunciado
+  });
+}
 }

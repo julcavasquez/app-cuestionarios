@@ -1,3 +1,9 @@
+<div class="volver-container">
+  <a routerLink="/home"
+    fragment="planes" class="btn-volver">
+    ← Volver a planes
+  </a>
+</div>
 <section class="pago-container" *ngIf="planSeleccionado">
   <!-- 🧾 Panel Izquierdo: Resumen del Plan -->
   <div class="pago-resumen">
@@ -23,7 +29,7 @@
 
     <div class="form-section">
       <label for="email">Debes ingresar el correo que te registraste:</label>
-      <input type="email" id="email" [(ngModel)]="correoUsuario" placeholder="ejemplo@correo.com" />
+      <input type="email" id="email" [(ngModel)]="correoUsuario" autocomplete = "off" placeholder="ejemplo@correo.com" />
     </div>
 
     <div class="metodos-pago">

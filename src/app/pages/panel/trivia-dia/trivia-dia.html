@@ -1,9 +1,12 @@
-  <div class="trivia-container">
-     <div *ngIf="mensaje == 1" class="no-trivia">
-    <img src="assets/img/cargando.png" alt="Cargando..." />
-    <p>La trivia de hoy aún no está disponible.</p>
-  </div>
-  <div *ngIf="mensaje == 0"  class="card panel-examen">
+  <!-- 🌀 Estado de carga -->
+<div *ngIf="cargando" class="loading-container">
+  <div class="spinner"></div>
+  <p>Cargando la trivia del día...</p>
+</div>
+  <div *ngIf="!cargando && mensaje == 0" class="trivia-container">
+
+  
+  <div class="card panel-examen">
      <h2>🎯 Trivia del Día</h2>
     <!-- Cronómetro -->
   <div class="timer">
@@ -61,6 +64,12 @@
   </div>
 
  
+  </div>
+
+  <!-- 🚫 Cuando no hay trivia -->
+ <div *ngIf="!cargando && mensaje == 1" class="no-trivia">
+    <img src="assets/img/cargando.png" alt="Cargando..." />
+    <p>La trivia de hoy aún no está disponible.</p>
   </div>
 
    

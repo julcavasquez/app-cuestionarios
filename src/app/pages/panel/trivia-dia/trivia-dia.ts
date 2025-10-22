@@ -34,6 +34,7 @@ export class TriviaDia implements OnInit{
   feedback_pregunta: '',
   opciones: []
 };
+  cargando: boolean = true; // 👈 bandera de estado inicial
   mensaje: number = 0;
   letras = ['a','b','c','d','e','f','g','h']; 
   seleccionadas: number[] = [];
@@ -54,8 +55,9 @@ export class TriviaDia implements OnInit{
   temporizador: any;
 
   ngOnInit() {
-    this.iniciarTemporizador();
     this.cargarTrivia();
+    this.iniciarTemporizador();
+    
   }
 
    ngOnDestroy() {
@@ -122,12 +124,15 @@ export class TriviaDia implements OnInit{
     cargarTrivia() {
     this.triviaService.getTriviaDelDia().subscribe({
       next: (res : any) => {
+         this.cargando = false; // 👈 detener carga
          if (res.message) {
           console.log(res.message);
           this.mensaje = 1; 
           // 👈 Mostramos el mensaje
     } else {
       this.preguntas = res;
+      this.mensaje = 0;
+      this.cargando = false;
     }
              
         

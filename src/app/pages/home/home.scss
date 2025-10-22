@@ -54,14 +54,7 @@
   }
 }
 
-
-.benefits-section {
-  margin: 4rem auto;
-  max-width: 1200px;
-  padding: 80px 20px;
-  text-align: center;
-
-  h2 {
+h2 {
     font-family: 'Raleway', sans-serif;
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -81,6 +74,15 @@
       border-radius: 2px;
     }
   }
+
+
+.benefits-section {
+  margin: 4rem auto;
+  max-width: 1200px;
+  padding: 80px 20px;
+  text-align: center;
+
+  
 }
 
 .benefits {
@@ -131,8 +133,7 @@
 
 .planes-section {
   text-align: center;
-  padding: 60px 20px;
-  background: #f9fafc;
+  padding: 80px 20px;
   font-family: 'Lato', sans-serif;
 }
 
