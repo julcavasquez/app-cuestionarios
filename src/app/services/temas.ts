@@ -12,6 +12,14 @@ export class TemasService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  getAllCompetencias(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/competencias`);
+  }
+
+   getDetalleCompetencia(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}/detallecompe`);
+  }
+
   addCuestionario(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
   }
@@ -22,6 +30,14 @@ export class TemasService {
 
   getTemasCantidad(): Observable<any> {
     return this.http.get(`${this.apiUrl}/temascantidad`);
+  }
+
+  getSubCompetenciasPorCompetencia(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/por-competencia/${id}`);
+  }
+
+  getTemasPorSubCompetencias(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/por-subcompetencia/${id}`);
   }
 
 }

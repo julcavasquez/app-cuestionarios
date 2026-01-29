@@ -2,6 +2,16 @@
   <div class="row">
     <!-- 📌 Tema -->
     <div class="col-md-6 mb-3">
+      <label for="id_tema" class="form-label">Competencia</label>
+      <select id="id_tema" formControlName="id_tema" class="form-select">
+        <option value="">-- Selecciona un tema --</option>
+        <option *ngFor="let tema of temas" [value]="tema.id_tema">
+          {{ tema.nom_tema }}
+        </option>
+      </select>
+    </div>
+    <!-- 📌 Tema -->
+    <div class="col-md-6 mb-3">
       <label for="id_tema" class="form-label">Tema</label>
       <select id="id_tema" formControlName="id_tema" class="form-select">
         <option value="">-- Selecciona un tema --</option>
@@ -10,6 +20,18 @@
         </option>
       </select>
     </div>
+    
+    <!-- 📌 Tema -->
+    <div class="col-md-6 mb-3">
+      <label for="id_tema" class="form-label">Tema</label>
+      <select id="id_tema" formControlName="id_tema" class="form-select">
+        <option value="">-- Selecciona un tema --</option>
+        <option *ngFor="let tema of temas" [value]="tema.id_tema">
+          {{ tema.nom_tema }}
+        </option>
+      </select>
+    </div>
+    
     
     <!-- 📌 Título -->
     <div class="col-12 mb-3">

@@ -18,14 +18,20 @@ cuestionariCompleto : any = {};
 cuestionarioId!: number;
  letras = ['a','b','c','d','e','f','g','h']; 
  temas: any[] = [];
+ competencias : any[] = [];
+ subCompetencias : any[] = [];
  btnGuardarBD = false;
+ detalle: any[] = [];
+ detalleAgrupado: any[] = [];
 constructor(private fb: FormBuilder,
   private route: ActivatedRoute,
   private temasService: TemasService,
   private router: Router,
 private preguntasService : PreguntasService) {
     this.preguntaForm = this.fb.group({
-      id_tema: ['', Validators.required],
+      id_tema: [[null], Validators.required],
+      competencia: [[null], Validators.required],
+      subCompetencia: [{value:[null],disabled: true},Validators.required],
       enunciado: ['', Validators.required],
       tipo: ['OU', Validators.required],
       feedback: [''],
@@ -54,15 +60,63 @@ private preguntasService : PreguntasService) {
     //     console.error('❌ Error cargando cuestionario:', err);
     //   }
     // });
-    this.cargarTemas();
+    this.cargarCompetencias();
+
+      this.preguntaForm.get('competencia')?.valueChanges.subscribe((selected) => {
+         console.log("Dato guardado:", selected);
+
+    // selected.id → ID de la competencia
+    // selected.nombre → Nombre de la competencia
+
+      if (selected && selected.id) {
+        this.cargarSubCompetencias(selected.id);
+        this.preguntaForm.get('subCompetencia')?.setValue('');
+         this.preguntaForm.get('subCompetencia')?.enable(); // ✅ habilitar dinámicamente
+      } else {
+        this.subCompetencias = [];
+        this.preguntaForm.get('subCompetencia')?.setValue('');
+         this.preguntaForm.get('subCompetencia')?.disable();
+      }
+    });
+
+     this.preguntaForm.get('subCompetencia')?.valueChanges.subscribe((selected) => {
+      if (selected && selected.id) {
+        this.cargarTemas(selected.id);
+        this.preguntaForm.get('id_tema')?.setValue('');
+      } else {
+        this.temas = [];
+        this.preguntaForm.get('id_tema')?.setValue('');
+       
+      }
+    });
   }
 
-    cargarTemas() {
-    this.temasService.getTemas().subscribe({
-      next: (res) => (this.temas = res),
+    cargarTemas(idSubCompetencia: number) {
+    this.temasService.getTemasPorSubCompetencias(idSubCompetencia).subscribe({
+      next: (res) => {
+        this.temas = res;
+        console.log(this.temas);
+      },
       error: (err) => console.error(err),
     });
   }
+  
+    cargarSubCompetencias(idCompetencia: number){
+      this.temasService.getSubCompetenciasPorCompetencia(idCompetencia).subscribe({
+      next: (res) => {
+        this.subCompetencias = res;
+      },
+      error: (err) => console.error(err)
+    });
+    }
+    cargarCompetencias() {
+    this.temasService.getAllCompetencias().subscribe({
+      next: (res) => (this.competencias = res),
+      error: (err) => console.error(err),
+    });
+  }
+
+
 
   preguntaForm: FormGroup;
   preguntasGuardadas: any[] = []; // 👉 aquí se almacenan las preguntas
@@ -108,12 +162,16 @@ private preguntasService : PreguntasService) {
     if (this.preguntaForm.valid) {
       // agregar al arreglo
       this.preguntasGuardadas.push(this.preguntaForm.value);
+      console.log(this.preguntasGuardadas);
+      console.log(this.temas);
       // reiniciar formulario
        // reiniciar pero con tipo en 1 por defecto
       this.preguntaForm.reset({
         enunciado: '',
         tipo: 'OU',   // 👈 valor fijo
-        id_tema: '',   // 👈 valor fijo
+        id_tema: '',
+        competencia: '', 
+        subCompetencia: '',  // 👈 valor fijo
         feedback:'',
         opciones: []
       });
@@ -149,10 +207,20 @@ private preguntasService : PreguntasService) {
     });
   }
 
-  getNombreTema(id: number): string {
+  getNombreCompe(id: number): string {
+    console.log(this.competencias);
     console.log(id);
-    return this.temas.find(t => t.id_tema === Number(id))?.nom_tema || 'No encontrado';
-  }
+      if (!this.competencias || this.competencias.length === 0) return 'Cargando...';
+      const competencia = this.competencias.find(t => Number(t.id_competencia) === Number(id));
+      return competencia ? competencia.nom_competencia : 'No encontrado';
+    }
+
+    getNombreSubCompe(idComp: number,idSubComp: number): string {
+      if (!this.subCompetencias || this.subCompetencias.length === 0) return 'Cargando...';
+      const sub_competencia = this.subCompetencias.find(t => Number(t.id_sub_compe) === Number(idSubComp));
+      return sub_competencia ? sub_competencia.descripcion_sub_compe : 'No encontrado';
+    }
 
   
+ 
 }

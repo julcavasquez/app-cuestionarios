@@ -33,16 +33,10 @@ export class CuestionarioForm implements OnInit {
       id_tema: ['', Validators.required]
     });
 
-    this.cargarTemas();
     // this.cargarUsuarios();
   }
 
-  cargarTemas() {
-    this.temasService.getTemas().subscribe({
-      next: (res) => (this.temas = res),
-      error: (err) => console.error(err),
-    });
-  }
+
 
   onSubmit() {
     if (this.cuestionarioForm.valid) {

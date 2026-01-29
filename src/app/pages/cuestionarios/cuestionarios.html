@@ -20,6 +20,7 @@
       <tr>
         <th>ID</th>
         <th>Enunciado</th>
+        <th>Competencia</th>
         <th>Tema</th>
         <th>Estado</th>
         <th>Acciones</th>
@@ -29,7 +30,8 @@
       <tr *ngFor="let c of cuestionarios">
         <td>{{ c.id_pregunta }}</td>
         <td>{{ c.enunciado_pregunta | slice:0:30 }}{{ c.enunciado_pregunta.length > 30 ? '...' : '' }}</td>
-        <td>{{ c.nom_tema }}</td>
+        <td>{{ c.nom_competencia }}</td>
+        <td>{{ c.cod_tema }}</td>
         <td>
           <span class="badge" [class.activo]="c.estado_pregunta" [class.inactivo]="!c.estado_pregunta">
             {{ c.estado_pregunta ? 'activo' : 'inactivo' }}

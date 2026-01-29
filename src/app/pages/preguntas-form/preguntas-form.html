@@ -38,10 +38,22 @@
     <h2>Crear Pregunta</h2>
 
     <form [formGroup]="preguntaForm" (ngSubmit)="guardarPregunta()">
-        <label for="id_tema" class="form-label">Tema</label>
+        <label for="competencia" class="form-label">Competencia</label>
+        <select id="competencia" formControlName="competencia" >
+        <option value="">-- Selecciona una Competencia --</option>
+        <option *ngFor="let co of competencias" [ngValue]="{ id: co.id_competencia, nombre: co.nom_competencia }">{{ co.nom_competencia }}</option>
+        </select>
+        <label for="subCompetencia" class="form-label">Sub Competencia</label>
+        <select id="subCompetencia" formControlName="subCompetencia" >
+        <option value="">-- Selecciona un tema --</option>
+        <option *ngFor="let s of subCompetencias" [ngValue]="{ id: s.id_sub_compe, cod: s.cod_sub_compe, nombre: s.descripcion_sub_compe }">
+         {{ s.cod_sub_compe }} - {{ s.descripcion_sub_compe | slice:0:50 }}{{ s.descripcion_sub_compe.length > 50 ? '...' : '' }}</option>
+        </select>
+        <label for="id_tema" class="form-label">Temas</label>
         <select id="id_tema" formControlName="id_tema" >
         <option value="">-- Selecciona un tema --</option>
-        <option *ngFor="let te of temas" [value]="te.id_tema">{{ te.nom_tema }}</option>
+        <option *ngFor="let t of temas" [ngValue]="{ id: t.id_tema, cod: t.cod_tema, nombre: t.descripcion_tema }">
+         {{ t.cod_tema }} - {{ t.descripcion_tema | slice:0:50 }}{{ t.descripcion_tema.length > 50 ? '...' : '' }}</option>
         </select>
         <div>
             <label>Enunciado</label>
@@ -84,12 +96,22 @@
   <div class="preview-section" *ngIf="preguntasGuardadas.length === 1"> 
     <h2>Vista Previa</h2>
     <div class="info-card">
-      <div *ngIf="temas.length > 0; else cargando">
-      <p>Tema: {{ getNombreTema(preguntasGuardadas[0].id_tema) }}</p>
+      <div *ngIf="competencias && competencias.length > 0; else cargando">
+      <p>Competencia: {{ preguntasGuardadas[0].competencia.nombre}}</p>
+    </div>
+    <div *ngIf="competencias && competencias.length > 0; else cargando">
+      <p>Sub Competencia: {{ preguntasGuardadas[0].subCompetencia.cod }} 
+        {{ preguntasGuardadas[0].subCompetencia.nombre | slice:0:50 }}
+       {{ preguntasGuardadas[0].subCompetencia.nombre.length > 50 ? '...........' : '' }}</p>
+    </div>
+    <div *ngIf="competencias && competencias.length > 0; else cargando">
+      <p>Tema: {{ preguntasGuardadas[0].id_tema.cod }} 
+        {{ preguntasGuardadas[0].id_tema.nombre | slice:0:50 }}
+       {{ preguntasGuardadas[0].id_tema.nombre.length > 50 ? '...........' : '' }}</p>
     </div>
 
     <ng-template #cargando>
-      <p>Cargando temas...</p>
+      <p>Cargando competencias...</p>
     </ng-template>
     </div>
     <div *ngFor="let pregunta of preguntasGuardadas; let i = index" class="preview-card">

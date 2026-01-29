@@ -18,6 +18,7 @@ import { Panel } from './pages/panel/panel';
 import { ExamenRapido } from './pages/panel/examen-rapido/examen-rapido';
 import { TriviaDia } from './pages/panel/trivia-dia/trivia-dia';
 import { PagoPlan } from './pages/pago-plan/pago-plan';
+import { DetalleCompetencias } from './pages/temas/detalle-competencias/detalle-competencias';
 export const routes: Routes = [
    {
     path: '',
@@ -40,6 +41,7 @@ export const routes: Routes = [
       { path: 'temas', component: Temas },
       { path: 'cuestionarios', component: Cuestionarios },
       { path: 'preguntas/:id', component: ViewPreguntas },
+      { path: 'detallecompe/:id', component: DetalleCompetencias },
       { path: 'preguntas', component: PreguntasForm },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

@@ -3,24 +3,25 @@ import { CommonModule } from '@angular/common';
 import { TemasService } from '../../services/temas';
 import { TemasForm } from './temas-form/temas-form';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { RouterLink } from '@angular/router';
 declare var bootstrap: any; // 👈 aquí declaras bootstrap
 @Component({
   selector: 'app-temas',
   standalone: true,
-  imports: [CommonModule,TemasForm,NgxPaginationModule],
+  imports: [CommonModule,TemasForm,NgxPaginationModule,RouterLink],
   templateUrl: './temas.html',
   styleUrl: './temas.scss'
 })
 
 
 export class Temas implements OnInit {
-  temas: any[] = [];
+  competencias: any[] = [];
 page = 1; // 📌 Página inicial
   constructor(private temaService: TemasService) {}
    mostrarModal = false;
   ngOnInit() {
-    this.temaService.getTemasCantidad().subscribe(data => {
-      this.temas = data;
+    this.temaService.getAllCompetencias().subscribe(data => {
+      this.competencias = data;
     });
   }
 
@@ -33,7 +34,7 @@ page = 1; // 📌 Página inicial
       const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
       modal.hide();
       this.temaService.getTemas().subscribe(data => {
-      this.temas = data;
+      this.competencias = data;
     });
     }
   }

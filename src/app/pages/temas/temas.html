@@ -16,24 +16,22 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Descripción</th>
-           <th>Preguntas</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of temas | paginate: { itemsPerPage: 5, currentPage: page }">
-            <td>{{ t.id_tema }}</td>
-        <td>{{ t.nom_tema }}</td>
-        <td [attr.title]="t.descripcion_tema">{{ t.descripcion_tema | slice:0:30 }}{{ t.descripcion_tema.length > 30 ? '...' : '' }}</td>
-        <td>{{ t.total_preguntas }}</td>        
+        <tr *ngFor="let c of competencias | paginate: { itemsPerPage: 5, currentPage: page }">
+            <td>{{ c.id_competencia }}</td>
+        <td>{{ c.nom_competencia }}</td>
+        <td [attr.title]="c.descripcion_competencia">{{ c.descripcion_competencia | slice:0:30 }}{{ c.descripcion_competencia.length > 30 ? '...' : '' }}</td>
         <td class="text-center">
-          <span class="badge" [class.activo]="t.estado_tema" [class.inactivo]="!t.estado_tema">
-            {{ t.estado_tema ? 'activo' : 'inactivo' }}
+          <span class="badge" [class.activo]="c.estado_competencia" [class.inactivo]="!c.estado_competencia">
+            {{ c.estado_competencia ? 'activo' : 'inactivo' }}
           </span>
         </td>
         <td>
-          <button class="btn btn-success editar">Editar</button>
+          <button [routerLink]="['/admin/detallecompe', c.id_competencia]" class="btn btn-info detalle"  >Detalle</button>
           <button class="btn btn-danger eliminar">Eliminar</button>
         </td>
         </tr>

@@ -1,0 +1,22 @@
+<div class="detalle-container">
+  <h2>Detalles de la Competencia</h2>
+  <h3>{{ detalle[0]?.nom_competencia }}</h3>
+
+  <div class="subcompetencia-card" *ngFor="let grupo of detalleAgrupado">
+    <div class="sub-header">
+      <span class="codigo">{{ grupo.cod_sub_compe }}</span>
+      <h4>{{ grupo.subcompetencia }}</h4>
+      
+    </div>
+
+    <div class="temas-container">
+      <div class="tema-card" *ngFor="let tema of grupo.temas">
+        <div class="tema-info">
+          <strong>{{ tema.cod_tema }}</strong>
+          <p>{{ tema.descripcion_tema }}</p>
+        </div>
+        <span class="badge">{{ tema.total_preguntas }} preguntas</span>
+      </div>
+    </div>
+  </div>
+</div>
